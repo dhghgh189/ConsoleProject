@@ -1,4 +1,5 @@
-﻿using ConsoleProject2_ForTheTop.Scenes;
+﻿using ConsoleProject2_ForTheTop.Actions;
+using ConsoleProject2_ForTheTop.Scenes;
 using ConsoleProject2_ForTheTop.Utils;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,14 @@ namespace ConsoleProject2_ForTheTop.Managers
     {
         BaseScene[] _scenes;
         BaseScene _currentScene;
+
         public BaseScene CurrentScene { get { return _currentScene; } }
+        public BaseScene[] AllScene { get { return _scenes; } }
+        public BaseScene GetScene(Define.EScene scene) => _scenes[(int)scene]; 
+        public T GetSceneAs<T>(Define.EScene scene) where T : BaseScene
+        {
+            return _scenes[(int)scene] as T; 
+        }
 
         public SceneManager()
         {
@@ -20,6 +28,10 @@ namespace ConsoleProject2_ForTheTop.Managers
             _scenes[(int)Define.EScene.Title] = new TitleScene();
             _scenes[(int)Define.EScene.Tutorial] = new TutorialScene();
             _scenes[(int)Define.EScene.Home] = new HomeScene();
+            _scenes[(int)Define.EScene.Training] = new TrainingScene();
+            _scenes[(int)Define.EScene.Shop] = new ShopScene();
+            _scenes[(int)Define.EScene.Equip] = new EquipScene();
+            _scenes[(int)Define.EScene.Battle] = new BattleScene();
         }
 
         public void ChangeScene(Define.EScene type)
@@ -28,12 +40,16 @@ namespace ConsoleProject2_ForTheTop.Managers
             if (!Enum.IsDefined(type))
                 return;
 
+            // Enum에 정의된 씬이 실존하지 않는 경우
+            if (_scenes[(int)type] == null)
+                return;
+
             // 이전 씬이 존재함
             if (_currentScene != null)
             {
                 _currentScene.Exit();
             }
-
+           
             // 씬 변경 처리
             _currentScene = _scenes[(int)type];
             _currentScene?.Enter();

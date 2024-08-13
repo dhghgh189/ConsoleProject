@@ -10,7 +10,6 @@ namespace ConsoleProject2_ForTheTop.Scenes
         public Define.EScene Type { get { return _type; } }
         public ConsoleKey InputKey { get { return _inputKey; } }
 
-
         public BaseScene(Define.EScene type)
         {
             _type = type;

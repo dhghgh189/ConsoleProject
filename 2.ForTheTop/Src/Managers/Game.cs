@@ -1,4 +1,7 @@
-﻿using ConsoleProject2_ForTheTop.Actors.Warriors;
+﻿using ConsoleProject2_ForTheTop.Actions;
+using ConsoleProject2_ForTheTop.Actions.Training;
+using ConsoleProject2_ForTheTop.Actors.Warriors;
+using ConsoleProject2_ForTheTop.Scenes;
 using ConsoleProject2_ForTheTop.Utils;
 using System.Runtime.CompilerServices;
 
@@ -25,8 +28,10 @@ namespace ConsoleProject2_ForTheTop.Managers
 
         #region Managers
         SceneManager _scene = new SceneManager();
+        ActionManager _action = new ActionManager();
 
         public static SceneManager Scene { get { return Instance._scene; } }
+        public static ActionManager Actions { get { return Instance._action; } }
         #endregion
 
         // 게임 진행 상태
@@ -73,7 +78,17 @@ namespace ConsoleProject2_ForTheTop.Managers
 
             // Player 생성
             _player = new Player();
-            _player.SetInfo(); 
+            _player.SetInfo();
+
+            // event bind
+            foreach (BaseScene scene in Scene.AllScene)
+            {
+                IActable actScene = scene as IActable;
+                if (actScene != null)
+                {
+                    actScene.OnCompleteAction += EndDay;
+                }
+            }
 
             // Title 씬 부터 시작
             Scene.ChangeScene(Define.EScene.Title);
@@ -92,6 +107,31 @@ namespace ConsoleProject2_ForTheTop.Managers
         void Update()
         {
             Scene.CurrentScene.Update();
+        }
+
+        // action 종료 후 하루를 마무리
+        void EndDay()
+        {
+            Console.Clear();
+            Util.PrintLine("하루가 지나갑니다...");
+            Thread.Sleep(2500);
+
+            _leftDays--;
+            if (_leftDays <= 0)
+            {
+                GameOver();
+            }
+
+            // 아직 leftDay가 남았으면 다시 Home으로
+            Scene.ChangeScene(Define.EScene.Home);
+        }
+
+        void GameOver()
+        {
+            // TODO : Game Over
+            Console.Clear();
+
+            Util.PrintLine("GAME OVER", ConsoleColor.DarkRed);
         }
     }
 }

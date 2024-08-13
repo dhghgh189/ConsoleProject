@@ -24,11 +24,11 @@ namespace ConsoleProject2_ForTheTop.Scenes
         {
             Console.Clear();
 
-            Util.PrintLine("===============================", ConsoleColor.Yellow);
-            Util.PrintLine($"={"=", 30}", ConsoleColor.Yellow);
-            Util.PrintLine("=         For The Top         =", ConsoleColor.Yellow);
-            Util.PrintLine($"={"=",30}", ConsoleColor.Yellow);
-            Util.PrintLine("===============================", ConsoleColor.Yellow);
+            Util.PrintLine("┌─────────────────────────────┐", ConsoleColor.Yellow);
+            Util.PrintLine($"│{"│", 30}", ConsoleColor.Yellow);
+            Util.PrintLine("│         For The Top         │", ConsoleColor.Yellow);
+            Util.PrintLine($"│{"│",30}", ConsoleColor.Yellow);
+            Util.PrintLine("└─────────────────────────────┘", ConsoleColor.Yellow);
 
             Util.PrintLine();
             Util.PrintLine(">        Press Any Key        <", ConsoleColor.Green);
@@ -46,7 +46,7 @@ namespace ConsoleProject2_ForTheTop.Scenes
 
         public override void Exit()
         {
-
+            
         }
     }
 }
