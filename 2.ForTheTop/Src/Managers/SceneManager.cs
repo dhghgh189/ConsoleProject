@@ -1,5 +1,6 @@
 ﻿using ConsoleProject2_ForTheTop.Actions;
 using ConsoleProject2_ForTheTop.Scenes;
+using ConsoleProject2_ForTheTop.Scenes.Training;
 using ConsoleProject2_ForTheTop.Utils;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,11 @@ namespace ConsoleProject2_ForTheTop.Managers
             _scenes[(int)Define.EScene.Tutorial] = new TutorialScene();
             _scenes[(int)Define.EScene.Home] = new HomeScene();
             _scenes[(int)Define.EScene.Training] = new TrainingScene();
+            {
+                _scenes[(int)Define.EScene.TrainHealth] = new TrainHelathScene();
+                _scenes[(int)Define.EScene.TrainAttack] = new TrainAttackScene();
+                _scenes[(int)Define.EScene.TrainDefense] = new TrainDefenseScene();
+            }
             _scenes[(int)Define.EScene.Shop] = new ShopScene();
             _scenes[(int)Define.EScene.Equip] = new EquipScene();
             _scenes[(int)Define.EScene.Battle] = new BattleScene();

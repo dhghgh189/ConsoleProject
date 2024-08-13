@@ -24,14 +24,19 @@ namespace ConsoleProject2_ForTheTop.Scenes
         {
             Console.Clear();
 
-            Util.PrintLine("┌─────────────────────────────┐", ConsoleColor.Yellow);
-            Util.PrintLine($"│{"│", 30}", ConsoleColor.Yellow);
-            Util.PrintLine("│         For The Top         │", ConsoleColor.Yellow);
-            Util.PrintLine($"│{"│",30}", ConsoleColor.Yellow);
-            Util.PrintLine("└─────────────────────────────┘", ConsoleColor.Yellow);
+            PrintTitle();
 
             Util.PrintLine();
             Util.PrintLine(">        Press Any Key        <", ConsoleColor.Green);
+        }
+
+        void PrintTitle()
+        {
+            Util.PrintLine("┌─────────────────────────────┐", ConsoleColor.Yellow);
+            Util.PrintLine($"│{"│",30}", ConsoleColor.Yellow);
+            Util.PrintLine("│         For The Top         │", ConsoleColor.Yellow);
+            Util.PrintLine($"│{"│",30}", ConsoleColor.Yellow);
+            Util.PrintLine("└─────────────────────────────┘", ConsoleColor.Yellow);
         }
 
         public override void Input()

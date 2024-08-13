@@ -11,18 +11,14 @@ namespace ConsoleProject2_ForTheTop.Menus
 {
     public class TrainingMenu : Menu
     {
-        Define.ETrainType _type;
-        public Define.ETrainType Type {  get { return _type; } }
-
-        public TrainingMenu(string name, string description, ConsoleColor textColor, Define.ETrainType type) 
-            : base(name, description, textColor)
-        {
-            _type = type;
+        public TrainingMenu(string name, string description, ConsoleColor textColor, Define.EScene scene) 
+            : base(name, description, textColor, scene)
+        {           
         }
 
         public override void Select()
         {
-            
+            Game.Scene.ChangeScene(_scene);
         }
     }
 }

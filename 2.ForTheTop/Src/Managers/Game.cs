@@ -113,7 +113,11 @@ namespace ConsoleProject2_ForTheTop.Managers
         void EndDay()
         {
             Console.Clear();
-            Util.PrintLine("하루가 지나갑니다...");
+            Util.PrintLine("┌─────────────────────────────┐", ConsoleColor.Yellow);
+            Util.PrintLine($"│{"│",30}", ConsoleColor.Yellow);
+            Util.PrintLine("│     하루가 지나갑니다..     │", ConsoleColor.Yellow);
+            Util.PrintLine($"│{"│",30}", ConsoleColor.Yellow);
+            Util.PrintLine("└─────────────────────────────┘", ConsoleColor.Yellow);
             Thread.Sleep(2500);
 
             _leftDays--;

@@ -1,31 +1,43 @@
-﻿using ConsoleProject2_ForTheTop.Managers;
+﻿using ConsoleProject2_ForTheTop.Actions;
+using ConsoleProject2_ForTheTop.Actions.Training;
+using ConsoleProject2_ForTheTop.Actors.Stats;
+using ConsoleProject2_ForTheTop.Managers;
 using ConsoleProject2_ForTheTop.Menus;
 using ConsoleProject2_ForTheTop.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleProject2_ForTheTop.Scenes
+namespace ConsoleProject2_ForTheTop.Scenes.Training
 {
-    public class HomeScene : BaseScene
+    public class TrainingScene : BaseScene
     {
-        int actionPosX = 16;
-        int actionPosY = 12;
+        int _actionPosX = 16;
+        int _actionPosY = 10;
 
-        int menuIndex;
-        ConsoleKey input;
+        int _menuIndex;
+        ConsoleKey _input;
 
-        public HomeScene() : base(Define.EScene.Home)
+        public event Action OnCompleteAction;
+
+        TrainingMenu[] _menus;
+
+        public TrainingScene() : base(Define.EScene.Training)
         {
-            
+            _menus = new TrainingMenu[]
+            {
+                new TrainingMenu("체력 단련", "HP가 증가합니다.", ConsoleColor.Green, Define.EScene.TrainHealth),
+                new TrainingMenu("공격 연습", "공격력이 증가합니다.", ConsoleColor.Red, Define.EScene.TrainAttack),
+                new TrainingMenu("방어 연습", "방어력이 증가합니다.", ConsoleColor.DarkCyan, Define.EScene.TrainDefense)
+            };
         }
 
         public override void Enter()
         {
-            menuIndex = 0;
+            _menuIndex = 0;
 
             Console.Clear();
         }
@@ -34,7 +46,7 @@ namespace ConsoleProject2_ForTheTop.Scenes
         {
             Console.SetCursorPosition(0, 0);
 
-            Util.PrintLine("[ HomeScene ]\n", ConsoleColor.Cyan);
+            Util.PrintLine("[ TrainingScene ]\n", Define.homeMenu[(int)Define.EAction.Training].TextColor);
 
             PrintStatus();
 
@@ -42,11 +54,11 @@ namespace ConsoleProject2_ForTheTop.Scenes
 
             PrintDescription();
 
-            PrintInfoMsg();   
+            PrintInfoMsg();
         }
 
-        #region Render   
-        void PrintStatus()
+        #region Render
+        public void PrintStatus()
         {
             // 플레이어의 상태 출력
             Util.PrintLine("==================================================================================\n", ConsoleColor.Gray);
@@ -55,21 +67,16 @@ namespace ConsoleProject2_ForTheTop.Scenes
             Util.Print($"Defense: {Game.Player.Stat.Defense,-8}", ConsoleColor.DarkCyan);
             Util.Print($"컨디션 : {Game.Player.Stat.Condition,-8}", ConsoleColor.Gray);
             Util.PrintLine($"Gold : {Game.Player.Gold}G", ConsoleColor.Yellow);
-            Util.PrintLine("\n==================================================================================\n", ConsoleColor.Gray);
-
-            // 남은 날짜 출력
-            Util.Print(" 남은 날짜 : ");
-            Util.Print($"{Game.LeftDays}", ConsoleColor.DarkRed);
-            Util.PrintLine("일");
+            Util.PrintLine("\n==================================================================================", ConsoleColor.Gray);
         }
 
         void PrintMenu()
         {
-            // 행동 메뉴 출력
-            for (int i = 0; i < Define.homeMenu.Length; i++)
+            // 훈련 메뉴 출력
+            for (int i = 0; i < _menus.Length; i++)
             {
-                Console.SetCursorPosition(actionPosX - 3, actionPosY + i * 2);
-                if (i == menuIndex)
+                Console.SetCursorPosition(_actionPosX - 3, _actionPosY + i * 2);
+                if (i == _menuIndex)
                 {
                     Util.Print("-> ");
                 }
@@ -78,8 +85,8 @@ namespace ConsoleProject2_ForTheTop.Scenes
                     Util.Print("   ");
                 }
 
-                Console.SetCursorPosition(actionPosX, actionPosY + i * 2);
-                Util.PrintLine($"{Define.homeMenu[i].Name}", Define.homeMenu[i].TextColor);
+                Console.SetCursorPosition(_actionPosX, _actionPosY + i * 2);
+                Util.PrintLine($"{_menus[i].Name}", _menus[i].TextColor);
             }
         }
 
@@ -89,7 +96,7 @@ namespace ConsoleProject2_ForTheTop.Scenes
             int lineCount = 4;
             for (int i = 0; i <= lineCount; i++)
             {
-                Console.SetCursorPosition(actionPosX + 17, actionPosY + i);
+                Console.SetCursorPosition(_actionPosX + 17, _actionPosY + i);
                 if (i == 0)
                 {
                     Util.Print("┌──────────────────────────────────────┐", ConsoleColor.Gray);
@@ -100,8 +107,8 @@ namespace ConsoleProject2_ForTheTop.Scenes
                 }
                 else if (i == lineCount / 2)
                 {
-                    Util.Print($"    {Define.homeMenu[menuIndex].Description}", Define.homeMenu[menuIndex].TextColor);
-                    int descLength = 4 + Define.homeMenu[menuIndex].Description.Length;
+                    Util.Print($"    {_menus[_menuIndex].Description}", _menus[_menuIndex].TextColor);
+                    int descLength = 4 + _menus[_menuIndex].Description.Length;
                     while (++descLength < 25)
                     {
                         Util.Print(" ");
@@ -113,10 +120,10 @@ namespace ConsoleProject2_ForTheTop.Scenes
         void PrintInfoMsg()
         {
             // Info 메세지 출력
-            int descPosY = (actionPosY + ((int)Define.EAction.Max - 1) * 2) + 4;
+            int descPosY = _actionPosY + (_menus.Length - 1) * 2 + 4;
             Console.SetCursorPosition(0, descPosY);
             Util.PrintLine("==================================================================================\n", ConsoleColor.Gray);
-            Util.Print("         플레이어의 행동을 선택해주세요!", ConsoleColor.Cyan);
+            Util.Print("           훈련 항목을 선택해주세요!", ConsoleColor.Cyan);
             Util.PrintLine(" (위 아래키로 이동, 엔터로 선택)\n", ConsoleColor.Green);
             Util.PrintLine("==================================================================================", ConsoleColor.Gray);
         }
@@ -124,30 +131,30 @@ namespace ConsoleProject2_ForTheTop.Scenes
 
         public override void Input()
         {
-            input = Console.ReadKey(true).Key;
+            _input = Console.ReadKey(true).Key;
         }
 
         public override void Update()
         {
-            switch (input)
+            switch (_input)
             {
                 case ConsoleKey.UpArrow:
                 case ConsoleKey.W:
                     {
-                        if (menuIndex > 0)
-                            menuIndex--;
-                    }                
+                        if (_menuIndex > 0)
+                            _menuIndex--;
+                    }
                     break;
                 case ConsoleKey.DownArrow:
                 case ConsoleKey.S:
                     {
-                        if (menuIndex < (int)Define.EAction.Max-1)
-                            menuIndex++;
-                    }                  
+                        if (_menuIndex < _menus.Length - 1)
+                            _menuIndex++;
+                    }
                     break;
                 case ConsoleKey.Enter:
                     {
-                        Define.homeMenu[menuIndex].Select();
+                        _menus[_menuIndex].Select();
                     }
                     break;
             }

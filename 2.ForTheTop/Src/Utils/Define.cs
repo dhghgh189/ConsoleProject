@@ -9,7 +9,22 @@ namespace ConsoleProject2_ForTheTop.Utils
 {
     public class Define
     {
-        public enum EScene { Title, Tutorial, Home, Training, Shop, Equip, Battle, Max }
+        #region Scenes
+        public enum EScene
+        { 
+            Title, 
+            Tutorial, 
+            Home, 
+            Training,
+                TrainHealth,
+                TrainAttack,
+                TrainDefense,
+            Shop, 
+            Equip,
+            Battle,
+            Max
+        }
+        #endregion
 
         #region Define Actions
         public enum EAction { Training, Shopping, Equip, Battle, Max }
