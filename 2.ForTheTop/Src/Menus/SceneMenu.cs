@@ -1,5 +1,4 @@
 ﻿using ConsoleProject2_ForTheTop.Managers;
-using ConsoleProject2_ForTheTop.Scenes;
 using ConsoleProject2_ForTheTop.Utils;
 using System;
 using System.Collections.Generic;
@@ -9,11 +8,14 @@ using System.Threading.Tasks;
 
 namespace ConsoleProject2_ForTheTop.Menus
 {
-    public class TrainingMenu : Menu
+    public class SceneMenu : Menu
     {
-        public TrainingMenu(string name, string description, ConsoleColor textColor, Define.EScene scene) 
-            : base(name, description, textColor, scene)
-        {           
+        // 메뉴 선택시 매칭되는 Scene으로 이동하기 위한 변수
+        Define.EScene _scene;
+
+        public SceneMenu(string name, string description, ConsoleColor textColor, Define.EScene scene) : base(name, description, textColor)
+        {
+            _scene = scene;
         }
 
         public override void Select()

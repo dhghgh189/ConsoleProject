@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace ConsoleProject2_ForTheTop.Scenes
 {
-    public class ShopScene : BaseScene, IActable
+    public class ShopScene : BaseScene, IActionable
     {
-        int menuIndex;
-        ConsoleKey input;
+        int _menuIndex;
+        ConsoleKey _input;
 
         public event Action OnCompleteAction;
 
@@ -31,23 +31,23 @@ namespace ConsoleProject2_ForTheTop.Scenes
         {
             Console.Clear();
 
-            Util.PrintLine("[ ShopScene ]\n", Define.homeMenu[(int)Define.EAction.Shopping].TextColor);
+            Util.PrintLine("[ Shop ]\n", Define.homeMenu[(int)Define.EAction.Shopping].TextColor);
         }
 
         public override void Input()
         {
-            input = Console.ReadKey(true).Key;
+            _input = Console.ReadKey(true).Key;
         }
 
         public override void Update()
         {
-            switch (input)
+            switch (_input)
             {
                 case ConsoleKey.UpArrow:
                 case ConsoleKey.W:
                     {
-                        if (menuIndex > 0)
-                            menuIndex--;
+                        if (_menuIndex > 0)
+                            _menuIndex--;
                     }
                     break;
                 case ConsoleKey.DownArrow:

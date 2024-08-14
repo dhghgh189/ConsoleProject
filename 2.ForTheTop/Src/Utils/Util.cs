@@ -20,5 +20,12 @@ namespace ConsoleProject2_ForTheTop.Utils
             Print(msg, color);
             Console.WriteLine();
         }
+
+        public static void ClearBuffer()
+        {
+            // 이전 씬에서 입력받았던 키가 처리되버리는 것을 방지
+            while (Console.KeyAvailable)
+                Console.ReadKey(true);
+        }
     }
 }

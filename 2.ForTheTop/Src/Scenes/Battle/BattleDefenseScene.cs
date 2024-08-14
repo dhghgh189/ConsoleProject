@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleProject2_ForTheTop.Scenes
 {
-    public interface IActable
+    public class BattleDefenseScene
     {
-        public event Action OnCompleteAction;
     }
 }

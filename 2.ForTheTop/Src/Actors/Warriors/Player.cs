@@ -1,4 +1,5 @@
 ﻿using ConsoleProject2_ForTheTop.Actors.Stats;
+using ConsoleProject2_ForTheTop.Managers;
 using ConsoleProject2_ForTheTop.Utils;
 using System;
 using System.Collections.Generic;
@@ -6,45 +7,43 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleProject2_ForTheTop.Actors.Warriors
+namespace ConsoleProject2_ForTheTop.Actors
 {
-    public class Player : Actor, IDamagable
+    public class Player : Warrior
     {
-        PlayerStat _stat;
+        Define.ECondition _condition;
         int _gold;
         // inventory 필요 
 
-        public PlayerStat Stat { get { return _stat; } }
-        public int Gold { get { return _gold; } }
+        public int Gold { get { return _gold; } set { _gold = value; } }
 
-        public Player() : base(Define.EActor.Player)
+        public Define.ECondition Condition
         {
-            _stat = new PlayerStat();
+            get { return _condition; }
+            set { _condition = value; }
         }
 
-        public override void SetInfo()
+        public Player(string name) : base(name, Define.EActor.Player)
         {
-            // 임시           
-            _stat.HP = 100;
-            _stat.AttackPoint = 10;
-            _stat.Defense = 10;
-            _stat.Condition = Define.ECondition.Good;
+            
+        }
 
+        public override void SetInfo(int maxHp, int attackPoint, int defense)
+        {
+            base.SetInfo(maxHp, attackPoint, defense);
+
+            _condition = Define.ECondition.Good;
             _gold = 1000;
         }
 
-        public void TakeDamage(int damage)
+        public override void TakeDamage(int damage)
         {
-            _stat.HP -= damage;
-            if (_stat.HP <= 0)
-            {
-                Die();
-            }
+            base.TakeDamage(damage);
         }
 
-        public void Die()
+        public override void Die()
         {
-            // TODO : 사망처리
+            base.Die();
         }
 
     }

@@ -1,4 +1,5 @@
 ﻿using ConsoleProject2_ForTheTop.Actions;
+using ConsoleProject2_ForTheTop.Actions.Battle;
 using ConsoleProject2_ForTheTop.Actions.Training;
 using ConsoleProject2_ForTheTop.Utils;
 using System;
@@ -11,40 +12,41 @@ namespace ConsoleProject2_ForTheTop.Managers
 {
     public class ActionManager
     {
-        List<BaseAction> _actions = new List<BaseAction>();
+        // Action Dictionary
+        Dictionary<Define.ESubAction, BaseAction> _actionDict;
 
-        Dictionary<Define.ETrainType, Training> _actTraining;
-
-        public List<BaseAction> AllActions { get { return _actions; } }
+        public List<BaseAction> AllActions { get { return _actionDict.Values.ToList(); } }
 
         public ActionManager()
-        {
-            _actions.Add(new TrainHealth(10));
-            _actions.Add(new TrainAttack(10));
-            _actions.Add(new TrainDefense(10));
+        {            
+            _actionDict = new Dictionary<Define.ESubAction, BaseAction>();
 
-            // Training Action Dictionary
-            _actTraining = new Dictionary<Define.ETrainType, Training>();
-            foreach(BaseAction action in _actions.Where(x => x is Training))
-            {
-                Training training = action as Training;
-                if (training != null)
-                {
-                    _actTraining.Add(training.Type, training);
-                }             
-            }
+            // 훈련하기
+            _actionDict.Add(Define.ESubAction.TrainHealth, new TrainHealth(10));
+            _actionDict.Add(Define.ESubAction.TrainAttack, new TrainAttack(10));
+            _actionDict.Add(Define.ESubAction.TrainDefense, new TrainDefense(10));
+
+            // 전투개시
+            _actionDict.Add(Define.ESubAction.BattleAttack, new BattleAttack());
+            //_actionDict.Add(Define.ESubAction.BattleDefense, new BattleDefense());
+            //_actionDict.Add(Define.ESubAction.BattleUse, new BattleUse());
+            _actionDict.Add(Define.ESubAction.BattleEnemyAttack, new BattleEnemyAttack());
         }
 
-        public Training GetTraining(Define.ETrainType type)
+        public T GetAction<T>(Define.ESubAction type) where T : BaseAction 
         {
-            _actTraining.TryGetValue(type, out Training training);
+            if (_actionDict.TryGetValue(type, out BaseAction baseAction) == false)
+                return null;
 
-            return training;
+            T action = baseAction as T;
+            return action;
         }
 
-        public void ExecuteTraining(Define.ETrainType type)
+        public void ExecuteAction(Define.ESubAction type)
         {
-            _actTraining.TryGetValue(type, out Training action);
+            if (_actionDict.TryGetValue(type, out BaseAction action) == false)
+                return;
+
             action?.Execute();
         }
     }

@@ -1,4 +1,5 @@
-﻿using ConsoleProject2_ForTheTop.Managers;
+﻿using ConsoleProject2_ForTheTop.Actors;
+using ConsoleProject2_ForTheTop.Managers;
 using ConsoleProject2_ForTheTop.Menus;
 using ConsoleProject2_ForTheTop.Utils;
 using System;
@@ -12,11 +13,11 @@ namespace ConsoleProject2_ForTheTop.Scenes
 {
     public class HomeScene : BaseScene
     {
-        int actionPosX = 16;
-        int actionPosY = 12;
+        int _actionPosX = 16;
+        int _actionPosY = 13;
 
-        int menuIndex;
-        ConsoleKey input;
+        int _menuIndex;
+        ConsoleKey _input;
 
         public HomeScene() : base(Define.EScene.Home)
         {
@@ -25,8 +26,12 @@ namespace ConsoleProject2_ForTheTop.Scenes
 
         public override void Enter()
         {
-            menuIndex = 0;
+            _menuIndex = 0;
 
+            // 체력 회복
+            Recovery();
+
+            Util.ClearBuffer();
             Console.Clear();
         }
 
@@ -34,7 +39,7 @@ namespace ConsoleProject2_ForTheTop.Scenes
         {
             Console.SetCursorPosition(0, 0);
 
-            Util.PrintLine("[ HomeScene ]\n", ConsoleColor.Cyan);
+            Util.PrintLine("[ Home ]\n", ConsoleColor.Cyan);
 
             PrintStatus();
 
@@ -50,17 +55,22 @@ namespace ConsoleProject2_ForTheTop.Scenes
         {
             // 플레이어의 상태 출력
             Util.PrintLine("==================================================================================\n", ConsoleColor.Gray);
-            Util.Print($" HP: {Game.Player.Stat.HP,-8}", ConsoleColor.Green);
-            Util.Print($"AP: {Game.Player.Stat.AttackPoint,-8}", ConsoleColor.Red);
-            Util.Print($"Defense: {Game.Player.Stat.Defense,-8}", ConsoleColor.DarkCyan);
-            Util.Print($"컨디션 : {Game.Player.Stat.Condition,-8}", ConsoleColor.Gray);
-            Util.PrintLine($"Gold : {Game.Player.Gold}G", ConsoleColor.Yellow);
+            Util.Print($" HP: {Game.Actor.Player.Stat.MaxHP,-8}", ConsoleColor.Green);
+            Util.Print($"Attack: {Game.Actor.Player.Stat.AttackPoint,-8}", ConsoleColor.Red);
+            Util.Print($"Defense: {Game.Actor.Player.Stat.Defense,-8}", ConsoleColor.DarkCyan);
+            Util.Print($"컨디션: {Game.Actor.Player.Condition,-8}", ConsoleColor.Gray);
+            Util.PrintLine($"Gold: {Game.Actor.Player.Gold}G", ConsoleColor.Yellow);
             Util.PrintLine("\n==================================================================================\n", ConsoleColor.Gray);
 
             // 남은 날짜 출력
             Util.Print(" 남은 날짜 : ");
             Util.Print($"{Game.LeftDays}", ConsoleColor.DarkRed);
             Util.PrintLine("일");
+
+            // 남은 적 수 출력
+            Util.Print(" 남은 적들 : ");
+            Util.Print($"{Game.LeftEnemies}", ConsoleColor.DarkRed);
+            Util.PrintLine("명");
         }
 
         void PrintMenu()
@@ -68,8 +78,8 @@ namespace ConsoleProject2_ForTheTop.Scenes
             // 행동 메뉴 출력
             for (int i = 0; i < Define.homeMenu.Length; i++)
             {
-                Console.SetCursorPosition(actionPosX - 3, actionPosY + i * 2);
-                if (i == menuIndex)
+                Console.SetCursorPosition(_actionPosX - 3, _actionPosY + i * 2);
+                if (i == _menuIndex)
                 {
                     Util.Print("-> ");
                 }
@@ -78,7 +88,7 @@ namespace ConsoleProject2_ForTheTop.Scenes
                     Util.Print("   ");
                 }
 
-                Console.SetCursorPosition(actionPosX, actionPosY + i * 2);
+                Console.SetCursorPosition(_actionPosX, _actionPosY + i * 2);
                 Util.PrintLine($"{Define.homeMenu[i].Name}", Define.homeMenu[i].TextColor);
             }
         }
@@ -89,7 +99,7 @@ namespace ConsoleProject2_ForTheTop.Scenes
             int lineCount = 4;
             for (int i = 0; i <= lineCount; i++)
             {
-                Console.SetCursorPosition(actionPosX + 17, actionPosY + i);
+                Console.SetCursorPosition(_actionPosX + 17, _actionPosY + i);
                 if (i == 0)
                 {
                     Util.Print("┌──────────────────────────────────────┐", ConsoleColor.Gray);
@@ -100,8 +110,8 @@ namespace ConsoleProject2_ForTheTop.Scenes
                 }
                 else if (i == lineCount / 2)
                 {
-                    Util.Print($"    {Define.homeMenu[menuIndex].Description}", Define.homeMenu[menuIndex].TextColor);
-                    int descLength = 4 + Define.homeMenu[menuIndex].Description.Length;
+                    Util.Print($"    {Define.homeMenu[_menuIndex].Description}", Define.homeMenu[_menuIndex].TextColor);
+                    int descLength = 4 + Define.homeMenu[_menuIndex].Description.Length;
                     while (++descLength < 25)
                     {
                         Util.Print(" ");
@@ -113,10 +123,10 @@ namespace ConsoleProject2_ForTheTop.Scenes
         void PrintInfoMsg()
         {
             // Info 메세지 출력
-            int descPosY = (actionPosY + ((int)Define.EAction.Max - 1) * 2) + 4;
+            int descPosY = (_actionPosY + ((int)Define.EAction.Max - 1) * 2) + 4;
             Console.SetCursorPosition(0, descPosY);
             Util.PrintLine("==================================================================================\n", ConsoleColor.Gray);
-            Util.Print("         플레이어의 행동을 선택해주세요!", ConsoleColor.Cyan);
+            Util.Print("         플레이어의 행동을 선택해주세요!", ConsoleColor.Yellow);
             Util.PrintLine(" (위 아래키로 이동, 엔터로 선택)\n", ConsoleColor.Green);
             Util.PrintLine("==================================================================================", ConsoleColor.Gray);
         }
@@ -124,35 +134,68 @@ namespace ConsoleProject2_ForTheTop.Scenes
 
         public override void Input()
         {
-            input = Console.ReadKey(true).Key;
+            _input = Console.ReadKey(true).Key;
         }
 
         public override void Update()
         {
-            switch (input)
+            switch (_input)
             {
                 case ConsoleKey.UpArrow:
                 case ConsoleKey.W:
                     {
-                        if (menuIndex > 0)
-                            menuIndex--;
+                        if (_menuIndex > 0)
+                            _menuIndex--;
                     }                
                     break;
                 case ConsoleKey.DownArrow:
                 case ConsoleKey.S:
                     {
-                        if (menuIndex < (int)Define.EAction.Max-1)
-                            menuIndex++;
+                        if (_menuIndex < (int)Define.EAction.Max-1)
+                            _menuIndex++;
                     }                  
                     break;
                 case ConsoleKey.Enter:
                     {
-                        Define.homeMenu[menuIndex].Select();
+                        Define.homeMenu[_menuIndex].Select();
                     }
                     break;
             }
         }
 
+        void Recovery()
+        {
+            Player player = Game.Actor.Player;
+
+            switch (player.Condition)
+            {
+                case Define.ECondition.Good:
+                    {
+                        // 풀 회복
+                        player.Stat.HP = player.Stat.MaxHP;
+                    }
+                    break;
+                case Define.ECondition.Normal:
+                    {
+                        // 절반 회복
+                        player.Stat.HP += (int)(player.Stat.MaxHP * 0.5f);
+                    }
+                    break;
+                case Define.ECondition.Bad:
+                    {
+                        // 최악의 컨디션
+                        player.Stat.HP += (int)(player.Stat.MaxHP * 0.25f);
+                    }
+                    break;
+            }
+
+            // 컨디션이 최상이 아니라면 1단계 회복
+            if (player.Condition > Define.ECondition.Good)
+            {
+                player.Condition -= 1;
+            }
+        }
+        
         public override void Exit()
         {
 

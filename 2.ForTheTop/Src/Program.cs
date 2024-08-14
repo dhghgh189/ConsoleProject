@@ -7,7 +7,7 @@ namespace ConsoleProject2_ForTheTop
         static void Main(string[] args)
         {
             // 게임 시작
-            Game.Run();
+            Game.Instance.RunGame();
         }
     }
 }

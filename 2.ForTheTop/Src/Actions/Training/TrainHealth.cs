@@ -10,13 +10,13 @@ namespace ConsoleProject2_ForTheTop.Actions.Training
 {
     public class TrainHealth : Training
     {
-        public TrainHealth(int amount) : base(amount, Define.ETrainType.Health)
+        public TrainHealth(int amount) : base(Define.ESubAction.TrainHealth, amount)
         {
         }
 
         public override void Execute()
         {
-            Game.Player.Stat.HP += _amount;
+            Game.Actor.Player.Stat.MaxHP += _amount;
         }
     }
 }

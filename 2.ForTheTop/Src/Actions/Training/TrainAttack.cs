@@ -10,13 +10,13 @@ namespace ConsoleProject2_ForTheTop.Actions.Training
 {
     public class TrainAttack : Training
     {
-        public TrainAttack(int amount) : base(amount, Define.ETrainType.Attack)
+        public TrainAttack(int amount) : base(Define.ESubAction.TrainAttack, amount)
         {
         }
 
         public override void Execute()
         {
-            Game.Player.Stat.AttackPoint += _amount;
+            Game.Actor.Player.Stat.AttackPoint += _amount;
         }
     }
 }

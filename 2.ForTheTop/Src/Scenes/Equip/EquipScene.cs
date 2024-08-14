@@ -1,4 +1,5 @@
-﻿using ConsoleProject2_ForTheTop.Utils;
+﻿using ConsoleProject2_ForTheTop.Managers;
+using ConsoleProject2_ForTheTop.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleProject2_ForTheTop.Scenes
 {
-    public class EquipScene : BaseScene, IActable
+    public class EquipScene : BaseScene, IActionable
     {
 
         public event Action OnCompleteAction;
@@ -26,7 +27,7 @@ namespace ConsoleProject2_ForTheTop.Scenes
         {
             Console.Clear();
 
-            Util.PrintLine("[ EquipScene ]\n", Define.homeMenu[(int)Define.EAction.Equip].TextColor);
+            Util.PrintLine("[ Equip ]\n", Define.homeMenu[(int)Define.EAction.Equip].TextColor);
         }
 
         public override void Input()

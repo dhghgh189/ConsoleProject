@@ -6,17 +6,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleProject2_ForTheTop.Actions.Training
+namespace ConsoleProject2_ForTheTop.Actions.Battle
 {
-    public class TrainDefense : Training
+    public class BattleEnemyAttack : BaseAction
     {
-        public TrainDefense(int amount) : base(Define.ESubAction.TrainDefense, amount)
+        public BattleEnemyAttack() : base(Define.ESubAction.BattleEnemyAttack)
         {
+
         }
 
         public override void Execute()
         {
-            Game.Actor.Player.Stat.Defense += _amount;
+            int amount = Game.Actor.CurrentEnemy.Stat.AttackPoint;
+            Game.Actor.Player.TakeDamage(amount);
         }
     }
 }

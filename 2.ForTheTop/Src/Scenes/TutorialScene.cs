@@ -13,7 +13,7 @@ namespace ConsoleProject2_ForTheTop.Scenes
 
         public override void Enter()
         {
-            
+
         }
 
         public override void Render()
@@ -38,7 +38,7 @@ namespace ConsoleProject2_ForTheTop.Scenes
             Util.PrintLine();
             for (int i = 0; i < Define.homeMenu.Length; i++)
             {
-                HomeMenu menu = Define.homeMenu[i];
+                SceneMenu menu = Define.homeMenu[i];
                 Util.PrintLine($"  {menu.Name} : {menu.Description}", menu.TextColor);
             }
 

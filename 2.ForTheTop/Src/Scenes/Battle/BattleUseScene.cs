@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleProject2_ForTheTop.Actors.Stats
+namespace ConsoleProject2_ForTheTop.Scenes
 {
-    public class EnemyStat : Stat
+    public class BattleUseScene
     {
-
     }
 }

@@ -9,19 +9,16 @@ namespace ConsoleProject2_ForTheTop.Actors
 {
     public class Actor
     {
+        protected string _name;
         protected Define.EActor _type;
 
+        public string Name { get { return _name; } }
         public Define.EActor Type { get { return _type; } }
 
-        public Actor(Define.EActor type)
+        public Actor(string name, Define.EActor type)
         {
+            _name = name;
             _type = type;
-        }
-
-        // 각 Actor 마다 필요한 정보를 설정
-        public virtual void SetInfo()
-        {
-
         }
     }
 }

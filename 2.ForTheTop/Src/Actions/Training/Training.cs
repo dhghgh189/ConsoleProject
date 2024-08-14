@@ -11,15 +11,12 @@ namespace ConsoleProject2_ForTheTop.Actions.Training
     public abstract class Training : BaseAction
     {
         protected int _amount;
-        protected Define.ETrainType _type;
 
         public int Amount { get { return _amount; } }
-        public Define.ETrainType Type { get { return _type; } }
 
-        public Training(int amount, Define.ETrainType type)
+        public Training(Define.ESubAction type, int amount) : base(type)
         {
             _amount = amount;
-            _type = type;
         }
     }
 }

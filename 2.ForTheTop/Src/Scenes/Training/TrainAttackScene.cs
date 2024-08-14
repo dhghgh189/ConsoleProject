@@ -1,34 +1,27 @@
-﻿using ConsoleProject2_ForTheTop.Managers;
+﻿using ConsoleProject2_ForTheTop.Actions;
+using ConsoleProject2_ForTheTop.Actions.Training;
+using ConsoleProject2_ForTheTop.Managers;
 using ConsoleProject2_ForTheTop.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ConsoleProject2_ForTheTop.Scenes.Training
+namespace ConsoleProject2_ForTheTop.Scenes
 {
-    public class TrainAttackScene : BaseScene, IActable
+    public class TrainAttackScene : BaseScene, IActionable
     {
         int _actionPosX = 16;
         int _actionPosY = 16;
-
         int _beforeAp;
 
-        Define.ETrainType _trainType;
+        Define.ESubAction _actionType;
+        ConsoleColor _textColor;
 
         enum EState { Process, Finish }
-
         EState _state;
-
-        ConsoleColor _textColor;
 
         public event Action OnCompleteAction;
 
         public TrainAttackScene() : base(Define.EScene.TrainAttack)
         {
-            _trainType = Define.ETrainType.Attack;
-
+            _actionType = Define.ESubAction.TrainAttack;
             _textColor = ConsoleColor.Red;
         }
 
@@ -36,7 +29,7 @@ namespace ConsoleProject2_ForTheTop.Scenes.Training
         {
             Console.Clear();
 
-            _beforeAp = Game.Player.Stat.AttackPoint;
+            _beforeAp = Game.Actor.Player.Stat.AttackPoint;
             _state = EState.Process;
         }
 
@@ -54,7 +47,7 @@ namespace ConsoleProject2_ForTheTop.Scenes.Training
         {
             Console.SetCursorPosition(0, 0);
 
-            Util.PrintLine("[ TrainAttackScene ]\n", _textColor);
+            Util.PrintLine("[ TrainAttack ]\n", _textColor);
 
             PrintStatus();
 
@@ -62,12 +55,12 @@ namespace ConsoleProject2_ForTheTop.Scenes.Training
             {
                 case EState.Process:
                     {
-                        PrintProcess();                      
+                        PrintProcess();
                     }
                     break;
                 case EState.Finish:
                     {
-                        PrintResult();                     
+                        PrintResult();
                     }
                     break;
             }
@@ -78,11 +71,11 @@ namespace ConsoleProject2_ForTheTop.Scenes.Training
         {
             // 플레이어의 상태 출력
             Util.PrintLine("==================================================================================\n", ConsoleColor.Gray);
-            Util.Print($" HP: {Game.Player.Stat.HP,-8}", ConsoleColor.Green);
-            Util.Print($"AP: {Game.Player.Stat.AttackPoint,-8}", ConsoleColor.Red);
-            Util.Print($"Defense: {Game.Player.Stat.Defense,-8}", ConsoleColor.DarkCyan);
-            Util.Print($"컨디션 : {Game.Player.Stat.Condition,-8}", ConsoleColor.Gray);
-            Util.PrintLine($"Gold : {Game.Player.Gold}G", ConsoleColor.Yellow);
+            Util.Print($" HP: {Game.Actor.Player.Stat.MaxHP,-8}", ConsoleColor.Green);
+            Util.Print($"Attack: {Game.Actor.Player.Stat.AttackPoint,-8}", ConsoleColor.Red);
+            Util.Print($"Defense: {Game.Actor.Player.Stat.Defense,-8}", ConsoleColor.DarkCyan);
+            Util.Print($"컨디션: {Game.Actor.Player.Condition,-8}", ConsoleColor.Gray);
+            Util.PrintLine($"Gold: {Game.Actor.Player.Gold}G", ConsoleColor.Yellow);
             Util.PrintLine("\n==================================================================================", ConsoleColor.Gray);
         }
 
@@ -96,7 +89,7 @@ namespace ConsoleProject2_ForTheTop.Scenes.Training
 
         void PrintResult()
         {
-            int amount = Game.Actions.GetTraining(_trainType).Amount;
+            int amount = Game.Actions.GetAction<TrainAttack>(_actionType).Amount;
 
             // 훈련 결과 출력
             Console.SetCursorPosition(_actionPosX, _actionPosY);
@@ -109,7 +102,7 @@ namespace ConsoleProject2_ForTheTop.Scenes.Training
             Util.Print($"공격력이 ");
             Util.Print($"{amount} ", _textColor);
             Util.Print($"증가했습니다! ({_beforeAp} => ");
-            Util.Print($"{Game.Player.Stat.AttackPoint}", _textColor);
+            Util.Print($"{Game.Actor.Player.Stat.AttackPoint}", _textColor);
             Util.PrintLine(")");
             Thread.Sleep(2500);
         }
@@ -122,7 +115,7 @@ namespace ConsoleProject2_ForTheTop.Scenes.Training
                 case EState.Process:
                     {
                         // Action 실행
-                        Game.Actions.ExecuteTraining(_trainType);
+                        Game.Actions.ExecuteAction(_actionType);
                         _state = EState.Finish;
                     }
                     break;

@@ -1,12 +1,6 @@
-﻿using ConsoleProject2_ForTheTop.Actions;
-using ConsoleProject2_ForTheTop.Scenes;
-using ConsoleProject2_ForTheTop.Scenes.Training;
+﻿using ConsoleProject2_ForTheTop.Scenes;
+using ConsoleProject2_ForTheTop.Scenes.Battle;
 using ConsoleProject2_ForTheTop.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleProject2_ForTheTop.Managers
 {
@@ -17,10 +11,10 @@ namespace ConsoleProject2_ForTheTop.Managers
 
         public BaseScene CurrentScene { get { return _currentScene; } }
         public BaseScene[] AllScene { get { return _scenes; } }
-        public BaseScene GetScene(Define.EScene scene) => _scenes[(int)scene]; 
+        public BaseScene GetScene(Define.EScene scene) => _scenes[(int)scene];
         public T GetSceneAs<T>(Define.EScene scene) where T : BaseScene
         {
-            return _scenes[(int)scene] as T; 
+            return _scenes[(int)scene] as T;
         }
 
         public SceneManager()
@@ -38,6 +32,12 @@ namespace ConsoleProject2_ForTheTop.Managers
             _scenes[(int)Define.EScene.Shop] = new ShopScene();
             _scenes[(int)Define.EScene.Equip] = new EquipScene();
             _scenes[(int)Define.EScene.Battle] = new BattleScene();
+            {
+                _scenes[(int)Define.EScene.BattleAttack] = new BattleAttackScene();
+                //_scenes[(int)Define.EScene.BattleDefense] = new BattleDefenseScene();
+                //_scenes[(int)Define.EScene.BattleUse] = new BattleUseScene();
+                _scenes[(int)Define.EScene.BattleEnemyAttack] = new BattleEnemyAttackScene();
+            }
         }
 
         public void ChangeScene(Define.EScene type)
@@ -55,7 +55,7 @@ namespace ConsoleProject2_ForTheTop.Managers
             {
                 _currentScene.Exit();
             }
-           
+
             // 씬 변경 처리
             _currentScene = _scenes[(int)type];
             _currentScene?.Enter();

@@ -1,17 +1,8 @@
-﻿using ConsoleProject2_ForTheTop.Actions;
-using ConsoleProject2_ForTheTop.Actions.Training;
-using ConsoleProject2_ForTheTop.Actors.Stats;
-using ConsoleProject2_ForTheTop.Managers;
+﻿using ConsoleProject2_ForTheTop.Managers;
 using ConsoleProject2_ForTheTop.Menus;
 using ConsoleProject2_ForTheTop.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ConsoleProject2_ForTheTop.Scenes.Training
+namespace ConsoleProject2_ForTheTop.Scenes
 {
     public class TrainingScene : BaseScene
     {
@@ -21,17 +12,15 @@ namespace ConsoleProject2_ForTheTop.Scenes.Training
         int _menuIndex;
         ConsoleKey _input;
 
-        public event Action OnCompleteAction;
-
-        TrainingMenu[] _menus;
+        SceneMenu[] _menus;
 
         public TrainingScene() : base(Define.EScene.Training)
         {
-            _menus = new TrainingMenu[]
+            _menus = new SceneMenu[]
             {
-                new TrainingMenu("체력 단련", "HP가 증가합니다.", ConsoleColor.Green, Define.EScene.TrainHealth),
-                new TrainingMenu("공격 연습", "공격력이 증가합니다.", ConsoleColor.Red, Define.EScene.TrainAttack),
-                new TrainingMenu("방어 연습", "방어력이 증가합니다.", ConsoleColor.DarkCyan, Define.EScene.TrainDefense)
+                new SceneMenu("체력 단련", "HP가 증가합니다.", ConsoleColor.Green, Define.EScene.TrainHealth),
+                new SceneMenu("공격 연습", "공격력이 증가합니다.", ConsoleColor.Red, Define.EScene.TrainAttack),
+                new SceneMenu("방어 연습", "방어력이 증가합니다.", ConsoleColor.DarkCyan, Define.EScene.TrainDefense)
             };
         }
 
@@ -46,7 +35,7 @@ namespace ConsoleProject2_ForTheTop.Scenes.Training
         {
             Console.SetCursorPosition(0, 0);
 
-            Util.PrintLine("[ TrainingScene ]\n", Define.homeMenu[(int)Define.EAction.Training].TextColor);
+            Util.PrintLine("[ Training ]\n", Define.homeMenu[(int)Define.EAction.Training].TextColor);
 
             PrintStatus();
 
@@ -62,11 +51,11 @@ namespace ConsoleProject2_ForTheTop.Scenes.Training
         {
             // 플레이어의 상태 출력
             Util.PrintLine("==================================================================================\n", ConsoleColor.Gray);
-            Util.Print($" HP: {Game.Player.Stat.HP,-8}", ConsoleColor.Green);
-            Util.Print($"AP: {Game.Player.Stat.AttackPoint,-8}", ConsoleColor.Red);
-            Util.Print($"Defense: {Game.Player.Stat.Defense,-8}", ConsoleColor.DarkCyan);
-            Util.Print($"컨디션 : {Game.Player.Stat.Condition,-8}", ConsoleColor.Gray);
-            Util.PrintLine($"Gold : {Game.Player.Gold}G", ConsoleColor.Yellow);
+            Util.Print($" HP: {Game.Actor.Player.Stat.MaxHP,-8}", ConsoleColor.Green);
+            Util.Print($"Attack: {Game.Actor.Player.Stat.AttackPoint,-8}", ConsoleColor.Red);
+            Util.Print($"Defense: {Game.Actor.Player.Stat.Defense,-8}", ConsoleColor.DarkCyan);
+            Util.Print($"컨디션: {Game.Actor.Player.Condition,-8}", ConsoleColor.Gray);
+            Util.PrintLine($"Gold: {Game.Actor.Player.Gold}G", ConsoleColor.Yellow);
             Util.PrintLine("\n==================================================================================", ConsoleColor.Gray);
         }
 
