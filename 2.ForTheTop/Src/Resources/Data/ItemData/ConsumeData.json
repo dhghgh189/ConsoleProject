@@ -1,0 +1,12 @@
+{
+  "Consume": [
+    {
+	    "Name" : "빨간 포션",
+	    "ItemType" : "Consumable",
+	    "Description" : "체력을 15 회복",
+	    "Price" : 1500,
+		"ConsumeType" : "Potion",
+	    "Amount" : 15
+    }
+  ]
+}

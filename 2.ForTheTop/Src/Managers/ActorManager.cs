@@ -19,7 +19,7 @@ namespace ConsoleProject2_ForTheTop.Managers
 
         public ActorManager()
         {
-            _enemies = new List<Enemy>(Define.ENEMY_COUNT);
+            _enemies = new List<Enemy>(Game.EnemyCount);
         }
 
         public void AddActor(Actor actor, Define.EActor type)
@@ -36,7 +36,7 @@ namespace ConsoleProject2_ForTheTop.Managers
                     break;
                 case Define.EActor.Enemy:
                     {
-                        if (_enemies.Count >= Define.ENEMY_COUNT)
+                        if (_enemies.Count >= Game.EnemyCount)
                             return;                            
                         
                         if (actor is Enemy)

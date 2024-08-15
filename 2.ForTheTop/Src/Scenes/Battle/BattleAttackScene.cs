@@ -169,7 +169,7 @@ namespace ConsoleProject2_ForTheTop.Scenes
             Util.PrintLine("");
             Util.PrintLine("\n");
             Util.PrintLine("==================================================================================", ConsoleColor.Gray);
-            Thread.Sleep(2500);
+            Thread.Sleep(2000);
         }
         #endregion
 

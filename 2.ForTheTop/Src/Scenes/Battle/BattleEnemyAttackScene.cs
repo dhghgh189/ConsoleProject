@@ -167,7 +167,7 @@ namespace ConsoleProject2_ForTheTop.Scenes.Battle
             Util.PrintLine("");
             Util.PrintLine("\n");
             Util.PrintLine("==================================================================================", ConsoleColor.Gray);
-            Thread.Sleep(1500);
+            Thread.Sleep(2000);
 
             if (!Game.Actor.Player.IsAlive)
             {

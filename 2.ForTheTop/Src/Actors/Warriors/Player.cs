@@ -1,11 +1,5 @@
-﻿using ConsoleProject2_ForTheTop.Actors.Stats;
-using ConsoleProject2_ForTheTop.Managers;
+﻿using ConsoleProject2_ForTheTop.Inventory;
 using ConsoleProject2_ForTheTop.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleProject2_ForTheTop.Actors
 {
@@ -13,9 +7,10 @@ namespace ConsoleProject2_ForTheTop.Actors
     {
         Define.ECondition _condition;
         int _gold;
-        // inventory 필요 
+        Inven _inventory;
 
         public int Gold { get { return _gold; } set { _gold = value; } }
+        public Inven Inventory { get { return _inventory;} }
 
         public Define.ECondition Condition
         {
@@ -25,7 +20,7 @@ namespace ConsoleProject2_ForTheTop.Actors
 
         public Player(string name) : base(name, Define.EActor.Player)
         {
-            
+            _inventory = new Inven();
         }
 
         public override void SetInfo(int maxHp, int attackPoint, int defense)
@@ -33,7 +28,7 @@ namespace ConsoleProject2_ForTheTop.Actors
             base.SetInfo(maxHp, attackPoint, defense);
 
             _condition = Define.ECondition.Good;
-            _gold = 1000;
+            _gold = 10000;
         }
 
         public override void TakeDamage(int damage)

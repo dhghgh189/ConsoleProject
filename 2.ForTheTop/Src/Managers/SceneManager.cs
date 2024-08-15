@@ -30,7 +30,15 @@ namespace ConsoleProject2_ForTheTop.Managers
                 _scenes[(int)Define.EScene.TrainDefense] = new TrainDefenseScene();
             }
             _scenes[(int)Define.EScene.Shop] = new ShopScene();
+            {
+                _scenes[(int)Define.EScene.ShopBuy] = new ShopBuyScene();
+                _scenes[(int)Define.EScene.ShopSell] = new ShopSellScene();
+            }
             _scenes[(int)Define.EScene.Equip] = new EquipScene();
+            {
+                _scenes[(int)Define.EScene.EquipItem] = new EquipItemScene();
+                //_scenes[(int)Define.EScene.UnEquipItem] = new UnEquipItemScene();
+            }
             _scenes[(int)Define.EScene.Battle] = new BattleScene();
             {
                 _scenes[(int)Define.EScene.BattleAttack] = new BattleAttackScene();

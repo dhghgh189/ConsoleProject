@@ -1,0 +1,58 @@
+{
+  "Equipment": [
+    {
+	    "Name" : "날카로운 검",
+	    "ItemType" : "Equipment",
+	    "Description" : "무엇이든 베어버리는 날카로운 검",
+	    "Price" : 1500,
+	    "EquipType" : "Weapon",
+	    "EquipSlot" : "Weapon",
+	    "Value" : 15
+    },
+	{
+	    "Name" : "전사의 창",
+	    "ItemType" : "Equipment",
+	    "Description" : "베테랑 전사들이 사용하는 창",
+	    "Price" : 3000,
+	    "EquipType" : "Weapon",
+	    "EquipSlot" : "Weapon",
+	    "Value" : 30
+	},
+	{
+		"Name" : "야만의 몽둥이",
+		"ItemType" : "Equipment",
+		"Description" : "강력한 힘을 가진 몽둥이",
+		"Price" : 10000,
+		"EquipType" : "Weapon",
+		"EquipSlot" : "Weapon",
+		"Value" : 50
+	},
+	{
+	    "Name" : "전사의 헬멧",
+	    "ItemType" : "Equipment",
+	    "Description" : "머리를 보호해주는 전사의 헬멧",
+	    "Price" : 2000,
+	    "EquipType" : "Armor",
+	    "EquipSlot" : "Helmet",
+	    "Value" : 10
+    },
+	{
+	    "Name" : "전사의 갑옷 상의",
+	    "ItemType" : "Equipment",
+	    "Description" : "상체를 보호해주는 전사의 갑옷",
+	    "Price" : 5000,
+	    "EquipType" : "Armor",
+	    "EquipSlot" : "Upper",
+	    "Value" : 30
+	},
+	{
+		"Name" : "전사의 갑옷 하의",
+		"ItemType" : "Equipment",
+		"Description" : "하체를 보호해주는 전사의 갑옷",
+		"Price" : 3500,
+		"EquipType" : "Armor",
+		"EquipSlot" : "Lower",
+		"Value" : 20
+	}
+  ]
+}

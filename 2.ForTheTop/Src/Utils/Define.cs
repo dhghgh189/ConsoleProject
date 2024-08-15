@@ -9,10 +9,6 @@ namespace ConsoleProject2_ForTheTop.Utils
 {
     public class Define
     {
-        #region Constants
-        public const int ENEMY_COUNT = 8;
-        #endregion
-
         #region Scenes
         public enum EScene
         { 
@@ -24,7 +20,11 @@ namespace ConsoleProject2_ForTheTop.Utils
                 TrainAttack,
                 TrainDefense,
             Shop, 
+                ShopBuy,
+                ShopSell,
             Equip,
+                EquipItem,
+                UnEquipItem,
             Battle,
                 BattleAttack,
                 BattleDefense,
@@ -34,7 +34,7 @@ namespace ConsoleProject2_ForTheTop.Utils
         }
         #endregion
 
-        #region Define Actions
+        #region Actions
         public enum EAction { Training, Shopping, Equip, Battle, Max }
         public enum ESubAction 
         { 
@@ -42,11 +42,24 @@ namespace ConsoleProject2_ForTheTop.Utils
             TrainAttack, 
             TrainDefense,
 
+            ShopBuy,
+            ShopSell,
+
+            EquipItem,
+            UnEquipItem,
+
             BattleAttack,
             BattleDefense,
             BattleUse,
             BattleEnemyAttack,
         }
+        #endregion
+
+        #region Items
+        public enum EItemType { Equipment, Consumable }
+        public enum EEquipType { Weapon, Armor }
+        public enum EEquipSlot { Weapon, Helmet, Upper, Lower, Max }
+        public enum EConsumeType { Potion }
         #endregion
 
         public enum EActor { Player, Enemy }

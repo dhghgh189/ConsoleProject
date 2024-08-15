@@ -13,7 +13,7 @@ namespace ConsoleProject2_ForTheTop.Scenes
 
         public override void Enter()
         {
-
+            Util.ClearBuffer();
         }
 
         public override void Render()

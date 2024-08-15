@@ -5,6 +5,7 @@ using ConsoleProject2_ForTheTop.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,17 +20,25 @@ namespace ConsoleProject2_ForTheTop.Scenes
         int _menuIndex;
         ConsoleKey _input;
 
+        // 컨디션 회복을 위한 게이지
+        int _recoveryGauge;
+
         public HomeScene() : base(Define.EScene.Home)
         {
-            
+            _recoveryGauge = 0;
         }
 
         public override void Enter()
         {
             _menuIndex = 0;
 
-            // 체력 회복
-            Recovery();
+            // 당일 최초 Enter시 체력 회복
+            if (Game.IsNewDay)
+            {
+                Recovery();
+            }
+
+            CheckCondition();
 
             Util.ClearBuffer();
             Console.Clear();
@@ -55,7 +64,7 @@ namespace ConsoleProject2_ForTheTop.Scenes
         {
             // 플레이어의 상태 출력
             Util.PrintLine("==================================================================================\n", ConsoleColor.Gray);
-            Util.Print($" HP: {Game.Actor.Player.Stat.MaxHP,-8}", ConsoleColor.Green);
+            Util.Print($" HP: {$"{Game.Actor.Player.Stat.HP} / {Game.Actor.Player.Stat.MaxHP}", -14}", ConsoleColor.Green);
             Util.Print($"Attack: {Game.Actor.Player.Stat.AttackPoint,-8}", ConsoleColor.Red);
             Util.Print($"Defense: {Game.Actor.Player.Stat.Defense,-8}", ConsoleColor.DarkCyan);
             Util.Print($"컨디션: {Game.Actor.Player.Condition,-8}", ConsoleColor.Gray);
@@ -188,11 +197,28 @@ namespace ConsoleProject2_ForTheTop.Scenes
                     }
                     break;
             }
+               
+            Game.IsNewDay = false;
+        }
 
-            // 컨디션이 최상이 아니라면 1단계 회복
+        void CheckCondition()
+        {
+            Player player = Game.Actor.Player;
+
+            // 컨디션이 최상이 아니라면 컨디션 관리 절차 진행
             if (player.Condition > Define.ECondition.Good)
             {
-                player.Condition -= 1;
+                _recoveryGauge += 20;
+
+                if (_recoveryGauge >= 100)
+                {
+                    player.Condition -= 1;
+                    _recoveryGauge = 0;
+                }
+            }
+            else
+            {
+                _recoveryGauge = 0;
             }
         }
         

@@ -51,7 +51,7 @@ namespace ConsoleProject2_ForTheTop.Scenes
         {
             // 플레이어의 상태 출력
             Util.PrintLine("==================================================================================\n", ConsoleColor.Gray);
-            Util.Print($" HP: {Game.Actor.Player.Stat.MaxHP,-8}", ConsoleColor.Green);
+            Util.Print($" HP: {$"{Game.Actor.Player.Stat.HP} / {Game.Actor.Player.Stat.MaxHP}",-14}", ConsoleColor.Green);
             Util.Print($"Attack: {Game.Actor.Player.Stat.AttackPoint,-8}", ConsoleColor.Red);
             Util.Print($"Defense: {Game.Actor.Player.Stat.Defense,-8}", ConsoleColor.DarkCyan);
             Util.Print($"컨디션: {Game.Actor.Player.Condition,-8}", ConsoleColor.Gray);
@@ -112,8 +112,8 @@ namespace ConsoleProject2_ForTheTop.Scenes
             int descPosY = _actionPosY + (_menus.Length - 1) * 2 + 4;
             Console.SetCursorPosition(0, descPosY);
             Util.PrintLine("==================================================================================\n", ConsoleColor.Gray);
-            Util.Print("           훈련 항목을 선택해주세요!", ConsoleColor.Cyan);
-            Util.PrintLine(" (위 아래키로 이동, 엔터로 선택)\n", ConsoleColor.Green);
+            Util.Print("     훈련 항목을 선택해주세요!", ConsoleColor.Cyan);
+            Util.PrintLine(" (위 아래키로 이동, 엔터로 선택, ESC로 돌아가기)\n", ConsoleColor.Green);
             Util.PrintLine("==================================================================================", ConsoleColor.Gray);
         }
         #endregion
@@ -144,6 +144,11 @@ namespace ConsoleProject2_ForTheTop.Scenes
                 case ConsoleKey.Enter:
                     {
                         _menus[_menuIndex].Select();
+                    }
+                    break;
+                case ConsoleKey.Escape:
+                    {
+                        Game.Scene.ChangeScene(Define.EScene.Home);
                     }
                     break;
             }

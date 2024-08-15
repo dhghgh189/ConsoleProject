@@ -1,4 +1,5 @@
-﻿using ConsoleProject2_ForTheTop.Utils;
+﻿using ConsoleProject2_ForTheTop.Datas;
+using ConsoleProject2_ForTheTop.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,12 @@ namespace ConsoleProject2_ForTheTop.Actors
 {
     public class Enemy : Warrior
     {
+        EnemyData _data;
+
         // reward
         int _gold;
 
+        public EnemyData Data { get { return _data; } }
         public int Gold { get { return _gold; } }
 
         public Enemy(string name) : base(name, Define.EActor.Enemy)
