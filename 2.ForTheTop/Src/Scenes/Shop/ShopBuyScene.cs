@@ -10,7 +10,7 @@ namespace ConsoleProject2_ForTheTop.Scenes
         int _itemPosX = 5;
         int _itemPosY = 8;
 
-        int _InfoPosY = 22;
+        int _infoPosY = 22;
 
         Define.ESubAction _actionType;
 
@@ -45,7 +45,7 @@ namespace ConsoleProject2_ForTheTop.Scenes
 
         void PrintStatus()
         {
-            // 플레이어의 상태 출력
+            // 소지 Gold 출력
             Util.PrintLine("==================================================================================\n", ConsoleColor.Gray);
             Util.Print($"   소지 Gold: {Game.Actor.Player.Gold}G", ConsoleColor.Yellow);
             Util.PrintLine($"   소지한 아이템 갯수 : {Game.Actor.Player.Inventory.AllItems.Count}개    ", ConsoleColor.Green);
@@ -56,7 +56,7 @@ namespace ConsoleProject2_ForTheTop.Scenes
         {
             int lineCount = 0;
 
-            // 아이템 출력
+            // 판매중인 아이템 출력
             foreach (ItemData data in _sellingItems)
             {
                 Console.SetCursorPosition(_itemPosX - 3, _itemPosY + lineCount * 2);
@@ -70,6 +70,18 @@ namespace ConsoleProject2_ForTheTop.Scenes
                 }
 
                 Console.SetCursorPosition(_itemPosX, _itemPosY + lineCount * 2);
+                if (data.ItemType == Define.EItemType.Equipment)
+                {
+                    Util.Print("[");
+                    Util.Print($"{((EquipmentData)data).EquipSlot}", ConsoleColor.Yellow);
+                    Util.Print("] ");
+                }
+                else if (data.ItemType == Define.EItemType.Consumable)
+                {
+                    Util.Print("[");
+                    Util.Print("소모품", ConsoleColor.Red);
+                    Util.Print("] ");
+                }
                 Util.Print("[");
                 Util.Print($"{data.Name}", ConsoleColor.Green);
                 Util.Print("] ");
@@ -86,11 +98,11 @@ namespace ConsoleProject2_ForTheTop.Scenes
 
         void PrintInfoMsg()
         {
-            // Menu 출력
-            Console.SetCursorPosition(0, _InfoPosY);
+            // Info 메세지 출력
+            Console.SetCursorPosition(0, _infoPosY);
             Util.PrintLine("==================================================================================\n", ConsoleColor.Gray);
 
-            Console.SetCursorPosition(0, _InfoPosY + 3);
+            Console.SetCursorPosition(0, _infoPosY + 3);
             Util.Print("   구입할 아이템을 선택하세요!", ConsoleColor.Cyan);
             Util.PrintLine(" (위 아래키로 이동, 엔터로 선택, ESC로 돌아가기)\n", ConsoleColor.Green);
             Util.PrintLine("");
@@ -123,7 +135,7 @@ namespace ConsoleProject2_ForTheTop.Scenes
                     break;
                 case ConsoleKey.Enter:
                     {
-                        // buy
+                        // Buy action
                         string name = _sellingItems[_menuIndex].Name;
                         Game.Actions.GetAction<ShopBuy>(_actionType).SetName(name);
                         Game.Actions.ExecuteAction(_actionType);

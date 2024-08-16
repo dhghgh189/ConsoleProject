@@ -7,13 +7,18 @@ namespace ConsoleProject2_ForTheTop.Actors
     {
         protected bool _isAlive;
         protected Stat _stat;
+        protected Define.EBattleState _state;
 
         public bool IsAlive { get { return _isAlive; } }
         public Stat Stat { get { return _stat; } }
+        public Define.EBattleState State { get { return _state; } set { _state = value; } }
+
+        // 가장 최근 받은 피해량
+        public int LatestDamageAmount { get; set; }
 
         public Warrior(string name, Define.EActor type) : base(name, type)
         {
-            
+               
         }
 
         // 필요한 정보를 set
@@ -33,6 +38,7 @@ namespace ConsoleProject2_ForTheTop.Actors
         public virtual void TakeDamage(int amount)
         {
             _stat.HP -= amount;
+            LatestDamageAmount = amount;
             if (_stat.HP <= 0)
             {
                 Die();

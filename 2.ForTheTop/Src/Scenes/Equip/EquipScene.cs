@@ -1,4 +1,5 @@
-﻿using ConsoleProject2_ForTheTop.Managers;
+﻿using ConsoleProject2_ForTheTop.Items;
+using ConsoleProject2_ForTheTop.Managers;
 using ConsoleProject2_ForTheTop.Menus;
 using ConsoleProject2_ForTheTop.Utils;
 using System;
@@ -11,6 +12,9 @@ namespace ConsoleProject2_ForTheTop.Scenes
 {
     public class EquipScene : BaseScene
     {
+        int _itemPosX = 5;
+        int _itemPosY = 8;
+
         int _menuPosY = 22;
 
         int _menuIndex;
@@ -42,6 +46,8 @@ namespace ConsoleProject2_ForTheTop.Scenes
 
             PrintStatus();
 
+            PrintItem();
+
             PrintMenu();
         }
 
@@ -49,12 +55,39 @@ namespace ConsoleProject2_ForTheTop.Scenes
         {
             // 플레이어의 상태 출력
             Util.PrintLine("==================================================================================\n", ConsoleColor.Gray);
-            Util.Print($" HP: {$"{Game.Actor.Player.Stat.HP} / {Game.Actor.Player.Stat.MaxHP}",-14}", ConsoleColor.Green);
-            Util.Print($"Attack: {Game.Actor.Player.Stat.AttackPoint,-8}", ConsoleColor.Red);
-            Util.Print($"Defense: {Game.Actor.Player.Stat.Defense,-8}", ConsoleColor.DarkCyan);
+            Util.Print($" HP: {$"{Game.Actor.Player.Stat.HP} / {Game.Actor.Player.Stat.MaxHP}",-11}", ConsoleColor.Green);
+            Util.Print($"Attack: {Game.Actor.Player.Stat.AttackPoint}+{Game.Actor.Player.AdditionalStat.AttackPoint,-5}", ConsoleColor.Red);
+            Util.Print($"Defense: {Game.Actor.Player.Stat.Defense}+{Game.Actor.Player.AdditionalStat.Defense,-5}", ConsoleColor.DarkCyan);
             Util.Print($"컨디션: {Game.Actor.Player.Condition,-8}", ConsoleColor.Gray);
             Util.PrintLine($"Gold: {Game.Actor.Player.Gold}G", ConsoleColor.Yellow);
-            Util.PrintLine("\n==================================================================================", ConsoleColor.Gray);
+            Util.PrintLine("\n==================================================================================\n", ConsoleColor.Gray);
+        }
+
+        void PrintItem()
+        {
+            Equipment[] equipItems = Game.Actor.Player.Inventory.EquipSlot;
+            // 아이템 출력
+            for (int i = 0; i < (int)Define.EEquipSlot.Max; i++)
+            {
+                Console.SetCursorPosition(_itemPosX, _itemPosY + i * 2);
+
+                if (equipItems[i] != null)
+                {
+                    Util.Print("[");
+                    Util.Print($"{(Define.EEquipSlot)i}", ConsoleColor.Yellow);
+                    Util.Print("] ");
+                    Util.Print("[");
+                    Util.Print($"{equipItems[i].Name}", ConsoleColor.Green);
+                    Util.Print("] ");
+
+                    Util.Print($"{equipItems[i].Description} ", ConsoleColor.Cyan);
+                    Util.Print("                       ");
+                }
+                else
+                {
+                    Util.Print("[Empty]                                                                 ", ConsoleColor.Red);
+                }
+            }
         }
 
         void PrintMenu()

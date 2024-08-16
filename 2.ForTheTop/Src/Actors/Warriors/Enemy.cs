@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ConsoleProject2_ForTheTop.Actors
 {
@@ -35,7 +36,22 @@ namespace ConsoleProject2_ForTheTop.Actors
 
         public override void TakeDamage(int amount)
         {
-            base.TakeDamage(amount);
+            int finalDamage = 0;
+            if (_state == Define.EBattleState.Defense)
+            {
+                finalDamage = (int)(amount - _stat.Defense);
+            }
+            else
+            {
+                finalDamage = (int)(amount - _stat.Defense * 0.5f);
+            }
+
+            if (finalDamage <= 0)
+            {
+                finalDamage = (int)(amount * 0.2f);
+            }
+
+            base.TakeDamage(finalDamage);
         }
 
         public override void Die()

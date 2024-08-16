@@ -8,19 +8,16 @@ using System.Threading.Tasks;
 
 namespace ConsoleProject2_ForTheTop.Actions
 {
-    public class BattleEnemyAttack : BaseAction
+    public class BattleDefense : BaseAction
     {
-        public BattleEnemyAttack() : base(Define.ESubAction.BattleEnemyAttack)
+        public BattleDefense() : base(Define.ESubAction.BattleDefense)
         {
 
         }
 
         public override void Execute()
         {
-            Game.Actor.CurrentEnemy.State = Define.EBattleState.Attack;
-
-            int amount = Game.Actor.CurrentEnemy.Stat.AttackPoint;
-            Game.Actor.Player.TakeDamage(amount);
+            Game.Actor.Player.State = Define.EBattleState.Defense;
         }
     }
 }

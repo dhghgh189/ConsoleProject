@@ -6,12 +6,12 @@ namespace ConsoleProject2_ForTheTop.Items
     {
         public override void Equip()
         {
-            Game.Actor.Player.Stat.AttackPoint += Data.Value;
+            Game.Actor.Player.AdditionalStat.AttackPoint += Data.Value;
         }
 
         public override void UnEquip()
         {
-            Game.Actor.Player.Stat.AttackPoint -= Data.Value;
+            Game.Actor.Player.AdditionalStat.AttackPoint -= Data.Value;
         }
     }
 }

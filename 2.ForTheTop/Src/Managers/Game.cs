@@ -69,9 +69,14 @@ namespace ConsoleProject2_ForTheTop.Managers
 
         void Init()
         {
+            // For Development
+            //Util.CreateDataFile("EnemyData\\EnemyData.json", "EnemyData\\EnemyData.Dat");
+            //Util.CreateDataFile("ItemData\\ConsumeData.json", "ItemData\\ConsumeData.Dat");
+            //Util.CreateDataFile("ItemData\\EquipmentData.json", "ItemData\\EquipmentData.Dat");
+
             // Game에 필요한 클래스들 초기화
             _data = new DataManager();
-            _data.LoadAllData();
+            _data.LoadAllData();    // DATA LOAD
 
             _scene = new SceneManager();
             _actor = new ActorManager();
@@ -98,14 +103,12 @@ namespace ConsoleProject2_ForTheTop.Managers
         {
             Console.CursorVisible = false;
 
-            // data load 필요?
-
             _isRunning = true;
 
             _isNewDay = true;
 
             // 남은 일 수
-            _leftDays = 30; // 임시 값
+            _leftDays = 30;
 
             // 전체 적 수
             _enemyCount = Data.EnemyDict.Count;
@@ -113,7 +116,7 @@ namespace ConsoleProject2_ForTheTop.Managers
             // 남은 적 수
             _leftEnemies = _enemyCount;
 
-            // Player 생성, 임시
+            // Player 생성
             Player player = new Player("플레이어");
             player.SetInfo(100, 10, 0);
             Actor.AddActor(player, Define.EActor.Player);
@@ -176,26 +179,48 @@ namespace ConsoleProject2_ForTheTop.Managers
         void EndDay()
         {
             Console.Clear();
-            Util.PrintLine("┌─────────────────────────────┐", ConsoleColor.Yellow);
-            Util.PrintLine($"│{"│",30}", ConsoleColor.Yellow);
-            Util.PrintLine("│     하루가 지나갑니다..     │", ConsoleColor.Yellow);
-            Util.PrintLine($"│{"│",30}", ConsoleColor.Yellow);
-            Util.PrintLine("└─────────────────────────────┘", ConsoleColor.Yellow);
+            Util.PrintLine("┌─────────────────────────────┐ ", ConsoleColor.Yellow);
+            Util.PrintLine($"│{"│",30} ", ConsoleColor.Yellow);
+            Util.PrintLine("│     하루가 지나갑니다..     │ ", ConsoleColor.Yellow);
+            Util.PrintLine($"│{"│",30} ", ConsoleColor.Yellow);
+            Util.PrintLine("└─────────────────────────────┘ ", ConsoleColor.Yellow);
             Thread.Sleep(2500);
 
             _leftDays--;
-            if (_leftDays <= 0)
+            if (LeftEnemies <= 0)
             {
+                Console.Clear();
+                Util.PrintLine("┌─────────────────────────────┐ ", ConsoleColor.Green);
+                Util.PrintLine($"│{"│",30} ", ConsoleColor.Green);
+                Util.PrintLine("│         축하합니다!         │ ", ConsoleColor.Green);
+                Util.PrintLine("│   모든 적을 물리쳤습니다!   │ ", ConsoleColor.Green);
+                Util.PrintLine($"│{"│",30} ", ConsoleColor.Green);
+                Util.PrintLine("└─────────────────────────────┘ ", ConsoleColor.Green);
+                Thread.Sleep(2000);
                 GameOver();
+
+                return;
+            }
+            else if (_leftDays <= 0)
+            {
+                Console.Clear();
+                Util.PrintLine("┌─────────────────────────────┐ ", ConsoleColor.Red);
+                Util.PrintLine($"│{"│",30} ", ConsoleColor.Red);
+                Util.PrintLine("│   기한이 모두 지났습니다.   │ ", ConsoleColor.Red);
+                Util.PrintLine($"│{"│",30} ", ConsoleColor.Red);
+                Util.PrintLine("└─────────────────────────────┘ ", ConsoleColor.Red);
+                Thread.Sleep(2000);
+                GameOver();
+                
                 return;
             }
 
             // 소비한 체력에 따른 컨디션 조정
-            if (Actor.Player.Stat.HP >= (int)(Actor.Player.Stat.MaxHP * 0.75))
+            if (Actor.Player.Stat.HP >= (int)(Actor.Player.Stat.MaxHP * 0.75f))
             {
                 Actor.Player.Condition = Define.ECondition.Good;
             }
-            else if (Actor.Player.Stat.HP >= (int)(Actor.Player.Stat.MaxHP * 0.5))
+            else if (Actor.Player.Stat.HP >= (int)(Actor.Player.Stat.MaxHP * 0.5f))
             {
                 Actor.Player.Condition = Define.ECondition.Normal;
             }
@@ -213,7 +238,6 @@ namespace ConsoleProject2_ForTheTop.Managers
 
         public void GameOver()
         {
-            // TODO : Game Over
             _isRunning = false;
         }
 
@@ -221,11 +245,11 @@ namespace ConsoleProject2_ForTheTop.Managers
         {
             Console.Clear();
 
-            Util.PrintLine("┌─────────────────────────────┐", ConsoleColor.DarkRed);
-            Util.PrintLine($"│{"│",30}", ConsoleColor.DarkRed);
-            Util.PrintLine("│          GAME OVER          │", ConsoleColor.DarkRed);
-            Util.PrintLine($"│{"│",30}", ConsoleColor.DarkRed);
-            Util.PrintLine("└─────────────────────────────┘", ConsoleColor.DarkRed);
+            Util.PrintLine("┌─────────────────────────────┐ ", ConsoleColor.DarkRed);
+            Util.PrintLine($"│{"│",30} ", ConsoleColor.DarkRed);
+            Util.PrintLine("│          GAME OVER          │ ", ConsoleColor.DarkRed);
+            Util.PrintLine($"│{"│",30} ", ConsoleColor.DarkRed);
+            Util.PrintLine("└─────────────────────────────┘ ", ConsoleColor.DarkRed);
         }
     }
 }

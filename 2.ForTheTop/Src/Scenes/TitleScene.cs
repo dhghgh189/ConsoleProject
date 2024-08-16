@@ -32,11 +32,11 @@ namespace ConsoleProject2_ForTheTop.Scenes
 
         void PrintTitle()
         {
-            Util.PrintLine("┌─────────────────────────────┐", ConsoleColor.Yellow);
-            Util.PrintLine($"│{"│",30}", ConsoleColor.Yellow);
-            Util.PrintLine("│         For The Top         │", ConsoleColor.Yellow);
-            Util.PrintLine($"│{"│",30}", ConsoleColor.Yellow);
-            Util.PrintLine("└─────────────────────────────┘", ConsoleColor.Yellow);
+            Util.PrintLine("┌─────────────────────────────┐ ", ConsoleColor.Yellow);
+            Util.PrintLine($"│{"│",30} ", ConsoleColor.Yellow);
+            Util.PrintLine("│         For The Top         │ ", ConsoleColor.Yellow);
+            Util.PrintLine($"│{"│",30} ", ConsoleColor.Yellow);
+            Util.PrintLine("└─────────────────────────────┘ ", ConsoleColor.Yellow);
         }
 
         public override void Input()

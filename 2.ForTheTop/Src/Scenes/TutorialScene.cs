@@ -21,11 +21,11 @@ namespace ConsoleProject2_ForTheTop.Scenes
             Console.Clear();
             Console.CursorVisible = true;
 
-            Util.PrintLine("┌─────────────────────────────┐", ConsoleColor.Yellow);
-            Util.PrintLine($"│{"│",30}", ConsoleColor.Yellow);
-            Util.PrintLine("│         How To Play         │", ConsoleColor.Yellow);
-            Util.PrintLine($"│{"│",30}", ConsoleColor.Yellow);
-            Util.PrintLine("└─────────────────────────────┘", ConsoleColor.Yellow);
+            Util.PrintLine("┌─────────────────────────────┐ ", ConsoleColor.Yellow);
+            Util.PrintLine($"│{"│",30} ", ConsoleColor.Yellow);
+            Util.PrintLine("│         How To Play         │ ", ConsoleColor.Yellow);
+            Util.PrintLine($"│{"│",30} ", ConsoleColor.Yellow);
+            Util.PrintLine("└─────────────────────────────┘ ", ConsoleColor.Yellow);
 
             Util.PrintLine();
             Util.PrintLine("당신은 가장 강한 검투사가 되기 위한 여정을 떠납니다.\n");

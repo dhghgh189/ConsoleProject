@@ -6,8 +6,8 @@ namespace ConsoleProject2_ForTheTop.Scenes
 {
     public class TrainingScene : BaseScene
     {
-        int _actionPosX = 16;
-        int _actionPosY = 10;
+        int _infoPosX = 16;
+        int _infoPosY = 10;
 
         int _menuIndex;
         ConsoleKey _input;
@@ -51,12 +51,12 @@ namespace ConsoleProject2_ForTheTop.Scenes
         {
             // 플레이어의 상태 출력
             Util.PrintLine("==================================================================================\n", ConsoleColor.Gray);
-            Util.Print($" HP: {$"{Game.Actor.Player.Stat.HP} / {Game.Actor.Player.Stat.MaxHP}",-14}", ConsoleColor.Green);
-            Util.Print($"Attack: {Game.Actor.Player.Stat.AttackPoint,-8}", ConsoleColor.Red);
-            Util.Print($"Defense: {Game.Actor.Player.Stat.Defense,-8}", ConsoleColor.DarkCyan);
+            Util.Print($" HP: {$"{Game.Actor.Player.Stat.HP} / {Game.Actor.Player.Stat.MaxHP}",-11}", ConsoleColor.Green);
+            Util.Print($"Attack: {Game.Actor.Player.Stat.AttackPoint}+{Game.Actor.Player.AdditionalStat.AttackPoint,-5}", ConsoleColor.Red);
+            Util.Print($"Defense: {Game.Actor.Player.Stat.Defense}+{Game.Actor.Player.AdditionalStat.Defense,-5}", ConsoleColor.DarkCyan);
             Util.Print($"컨디션: {Game.Actor.Player.Condition,-8}", ConsoleColor.Gray);
             Util.PrintLine($"Gold: {Game.Actor.Player.Gold}G", ConsoleColor.Yellow);
-            Util.PrintLine("\n==================================================================================", ConsoleColor.Gray);
+            Util.PrintLine("\n==================================================================================\n", ConsoleColor.Gray);
         }
 
         void PrintMenu()
@@ -64,7 +64,7 @@ namespace ConsoleProject2_ForTheTop.Scenes
             // 훈련 메뉴 출력
             for (int i = 0; i < _menus.Length; i++)
             {
-                Console.SetCursorPosition(_actionPosX - 3, _actionPosY + i * 2);
+                Console.SetCursorPosition(_infoPosX - 3, _infoPosY + i * 2);
                 if (i == _menuIndex)
                 {
                     Util.Print("-> ");
@@ -74,18 +74,18 @@ namespace ConsoleProject2_ForTheTop.Scenes
                     Util.Print("   ");
                 }
 
-                Console.SetCursorPosition(_actionPosX, _actionPosY + i * 2);
+                Console.SetCursorPosition(_infoPosX, _infoPosY + i * 2);
                 Util.PrintLine($"{_menus[i].Name}", _menus[i].TextColor);
             }
         }
 
         void PrintDescription()
         {
-            // 행동 메뉴 설명 출력
+            // 훈련 메뉴 설명 출력
             int lineCount = 4;
             for (int i = 0; i <= lineCount; i++)
             {
-                Console.SetCursorPosition(_actionPosX + 17, _actionPosY + i);
+                Console.SetCursorPosition(_infoPosX + 17, _infoPosY + i);
                 if (i == 0)
                 {
                     Util.Print("┌──────────────────────────────────────┐", ConsoleColor.Gray);
@@ -109,7 +109,7 @@ namespace ConsoleProject2_ForTheTop.Scenes
         void PrintInfoMsg()
         {
             // Info 메세지 출력
-            int descPosY = _actionPosY + (_menus.Length - 1) * 2 + 4;
+            int descPosY = _infoPosY + (_menus.Length - 1) * 2 + 4;
             Console.SetCursorPosition(0, descPosY);
             Util.PrintLine("==================================================================================\n", ConsoleColor.Gray);
             Util.Print("     훈련 항목을 선택해주세요!", ConsoleColor.Cyan);

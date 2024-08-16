@@ -7,14 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleProject2_ForTheTop.Scenes.Battle
+namespace ConsoleProject2_ForTheTop.Scenes
 {
     public class BattleEnemyAttackScene : BaseScene
     {
         int _playerPosX = 3;
         int _playerPosY = 12;
 
-        int _enemyPosX = 59;
+        int _enemyPosX = 45;
         int _enemyPosY = 4;
 
         int _infoPosY = 18;
@@ -124,11 +124,11 @@ namespace ConsoleProject2_ForTheTop.Scenes.Battle
 
             Console.SetCursorPosition(_playerPosX, _playerPosY + lineCount++);
             Util.Print("AP ", ConsoleColor.Red);
-            Util.Print($": {player.Stat.AttackPoint,-3}");
+            Util.Print($": {player.Stat.AttackPoint}+{player.AdditionalStat.AttackPoint,-3}");
 
             Console.SetCursorPosition(_playerPosX, _playerPosY + lineCount);
             Util.Print("Defense ", ConsoleColor.DarkCyan);
-            Util.Print($": {player.Stat.Defense,-3}");
+            Util.Print($": {player.Stat.Defense}+{player.AdditionalStat.Defense,-3}");
 
             Console.SetCursorPosition(0, _infoPosY);
             Util.PrintLine("==================================================================================\n", ConsoleColor.Gray);
@@ -156,9 +156,8 @@ namespace ConsoleProject2_ForTheTop.Scenes.Battle
         {
             Util.PrintLine("\n");
 
-            Warrior attacker = Game.Actor.CurrentEnemy;
             Warrior enemy = Game.Actor.Player;
-            int damage = attacker.Stat.AttackPoint;
+            int damage = enemy.LatestDamageAmount;
 
             Util.Print($"   {enemy.Name}", ConsoleColor.Green);
             Util.Print("는(은) ");

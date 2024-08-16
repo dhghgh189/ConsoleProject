@@ -50,7 +50,7 @@ namespace ConsoleProject2_ForTheTop.Scenes
 
         void PrintStatus()
         {
-            // 플레이어의 상태 출력
+            // 소지 Gold 출력
             Util.PrintLine("==================================================================================\n", ConsoleColor.Gray);
             Util.Print($"   소지 Gold: {Game.Actor.Player.Gold}G", ConsoleColor.Yellow);
             Util.PrintLine($"   소지한 아이템 갯수 : {Game.Actor.Player.Inventory.AllItems.Count}개    ", ConsoleColor.Green);

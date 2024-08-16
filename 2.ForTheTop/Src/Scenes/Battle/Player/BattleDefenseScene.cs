@@ -1,7 +1,5 @@
 ﻿using ConsoleProject2_ForTheTop.Actors;
-using ConsoleProject2_ForTheTop.Actors.Stats;
 using ConsoleProject2_ForTheTop.Managers;
-using ConsoleProject2_ForTheTop.Menus;
 using ConsoleProject2_ForTheTop.Utils;
 using System;
 using System.Collections.Generic;
@@ -11,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace ConsoleProject2_ForTheTop.Scenes
 {
-    public class BattleAttackScene : BaseScene
+    public class BattleDefenseScene : BaseScene
     {
         int _playerPosX = 3;
         int _playerPosY = 12;
 
-        int _enemyPosX = 59;
+        int _enemyPosX = 45;
         int _enemyPosY = 4;
 
         int _infoPosY = 18;
@@ -27,44 +25,27 @@ namespace ConsoleProject2_ForTheTop.Scenes
         Define.ESubAction _actionType;
         ConsoleColor _textColor;
 
-        enum EState { Process, Finish }
-        EState _state;
-
-        public BattleAttackScene() : base(Define.EScene.BattleAttack)
+        public BattleDefenseScene() : base(Define.EScene.BattleAttack)
         {
-            _actionType = Define.ESubAction.BattleAttack;
-            _textColor = ConsoleColor.Red;
+            _actionType = Define.ESubAction.BattleDefense;
+            _textColor = ConsoleColor.DarkCyan;
         }
 
         public override void Enter()
         {
             _enemyMaxHp = Game.Actor.CurrentEnemy.Stat.MaxHP / 10;
             _playerMaxHp = Game.Actor.Player.Stat.MaxHP / 10;
-
-            _state = EState.Process;
         }
 
         public override void Render()
         {
             Console.SetCursorPosition(0, 0);
 
-            Util.PrintLine("[ BattleAttack ]\n", Define.homeMenu[(int)Define.EAction.Battle].TextColor);
+            Util.PrintLine("[ BattleDefense ]\n", Define.homeMenu[(int)Define.EAction.Battle].TextColor);
 
             PrintActors();
 
-            switch (_state)
-            {
-                case EState.Process:
-                    {
-                        PrintProcess();
-                    }
-                    break;
-                case EState.Finish:
-                    {
-                        PrintResult();
-                    }
-                    break;
-            }           
+            PrintInfoMsg();
         }
 
         #region Render
@@ -75,7 +56,7 @@ namespace ConsoleProject2_ForTheTop.Scenes
             Util.PrintLine("==================================================================================\n", ConsoleColor.Gray);
 
             // Actor들의 현재 체력
-            int enemyHp = Game.Actor.CurrentEnemy.Stat.HP / 10; 
+            int enemyHp = Game.Actor.CurrentEnemy.Stat.HP / 10;
             int playerHp = Game.Actor.Player.Stat.HP / 10;
 
             // Enemy Info
@@ -95,15 +76,15 @@ namespace ConsoleProject2_ForTheTop.Scenes
 
             Console.SetCursorPosition(_enemyPosX, _enemyPosY + lineCount++);
             Util.Print("HP ", ConsoleColor.DarkRed);
-            Util.Print($": {enemy.Stat.HP, -3}");
+            Util.Print($": {enemy.Stat.HP,-3}");
 
             Console.SetCursorPosition(_enemyPosX, _enemyPosY + lineCount++);
             Util.Print("AP ", ConsoleColor.Red);
-            Util.Print($": {enemy.Stat.AttackPoint, -3}");
+            Util.Print($": {enemy.Stat.AttackPoint,-3}");
 
             Console.SetCursorPosition(_enemyPosX, _enemyPosY + lineCount);
             Util.Print("Defense ", ConsoleColor.DarkCyan);
-            Util.Print($": {enemy.Stat.Defense, -3}");
+            Util.Print($": {enemy.Stat.Defense,-3}");
 
             // Player Info
             lineCount = 0;
@@ -122,50 +103,32 @@ namespace ConsoleProject2_ForTheTop.Scenes
 
             Console.SetCursorPosition(_playerPosX, _playerPosY + lineCount++);
             Util.Print("HP ", ConsoleColor.DarkRed);
-            Util.Print($": {player.Stat.HP, -3}");
+            Util.Print($": {player.Stat.HP,-3}");
 
             Console.SetCursorPosition(_playerPosX, _playerPosY + lineCount++);
             Util.Print("AP ", ConsoleColor.Red);
-            Util.Print($": {player.Stat.AttackPoint, -3}");
+            Util.Print($": {player.Stat.AttackPoint}+{player.AdditionalStat.AttackPoint,-3}");
 
             Console.SetCursorPosition(_playerPosX, _playerPosY + lineCount);
             Util.Print("Defense ", ConsoleColor.DarkCyan);
-            Util.Print($": {player.Stat.Defense, -3}");
+            Util.Print($": {player.Stat.Defense}+{player.AdditionalStat.Defense,-3}");
 
             Console.SetCursorPosition(0, _infoPosY);
             Util.PrintLine("==================================================================================\n", ConsoleColor.Gray);
         }
 
-        // 공격 진행 메세지 출력
-        void PrintProcess()
+        // 방어 진행 메세지 출력
+        void PrintInfoMsg()
         {
-            Util.Print("                                                                  ");                      
+            Util.Print("                                                                  ");
             Util.PrintLine("\n");
 
-            Warrior attacker = Game.Actor.Player; 
+            Warrior defender = Game.Actor.Player;
 
-            Util.Print($"   {attacker.Name}", ConsoleColor.Green);
-            Util.Print("의 ");
-            Util.PrintLine("공격!", _textColor);
-            Util.PrintLine("");
-            Util.PrintLine("\n");
-            Util.PrintLine("==================================================================================", ConsoleColor.Gray);
-            Thread.Sleep(1500);
-        }
-
-        // 공격 결과 메세지 출력
-        void PrintResult()
-        {
-            Util.PrintLine("\n");
-
-            Warrior attacker = Game.Actor.Player; 
-            Warrior enemy = Game.Actor.CurrentEnemy;
-            int damage = attacker.Stat.AttackPoint;
-
-            Util.Print($"   {enemy.Name}", ConsoleColor.Red);
+            Util.Print($"   {defender.Name}", ConsoleColor.Green);
             Util.Print("는(은) ");
-            Util.Print($"{damage}", _textColor);
-            Util.PrintLine("의 데미지를 입었다!");
+            Util.Print("방어", _textColor);
+            Util.PrintLine("태세를 갖췄다!");
             Util.PrintLine("");
             Util.PrintLine("\n");
             Util.PrintLine("==================================================================================", ConsoleColor.Gray);
@@ -175,34 +138,13 @@ namespace ConsoleProject2_ForTheTop.Scenes
 
         public override void Input()
         {
-            
+
         }
 
         public override void Update()
         {
-            switch (_state)
-            {
-                case EState.Process:
-                    {
-                        Game.Actions.ExecuteAction(_actionType);
-                        _state = EState.Finish;
-                    }
-                    break;
-                case EState.Finish:
-                    {
-                        if (Game.Actor.CurrentEnemy.IsAlive)
-                        {
-                            // enemy의 공격 턴으로 이행
-                            Game.Scene.ChangeScene(Define.EScene.BattleEnemyAttack);
-                        }
-                        else
-                        {
-                            // enemy가 사망했으므로 되돌아간다.
-                            Game.Scene.ChangeScene(Define.EScene.Battle);
-                        }
-                    }
-                    break;
-            }
+            Game.Actions.ExecuteAction(_actionType);
+            Game.Scene.ChangeScene(Define.EScene.BattleEnemyAI);
         }
 
         public override void Exit()

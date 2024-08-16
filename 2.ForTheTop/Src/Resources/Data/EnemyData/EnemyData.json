@@ -1,0 +1,60 @@
+{
+  "Enemies": [
+    {
+	    "Name" : "CPU1",
+		"MaxHP" : "100",
+		"AttackPoint" : "10",
+		"Defense" : "0",
+	    "Gold" : 1000
+    },
+	{
+	    "Name" : "CPU2",
+		"MaxHP" : "110",
+		"AttackPoint" : "20",
+		"Defense" : "10",
+	    "Gold" : 2000
+    },
+	{
+	    "Name" : "CPU3",
+		"MaxHP" : "120",
+		"AttackPoint" : "30",
+		"Defense" : "20",
+	    "Gold" : 3500
+    },
+	{
+	    "Name" : "CPU4",
+		"MaxHP" : "130",
+		"AttackPoint" : "40",
+		"Defense" : "30",
+	    "Gold" : 5500
+    },
+	{
+	    "Name" : "CPU5",
+		"MaxHP" : "140",
+		"AttackPoint" : "50",
+		"Defense" : "40",
+	    "Gold" : 8000
+    },
+	{
+	    "Name" : "CPU6",
+		"MaxHP" : "150",
+		"AttackPoint" : "60",
+		"Defense" : "50",
+	    "Gold" : 11000
+    },
+	{
+	    "Name" : "CPU7",
+		"MaxHP" : "160",
+		"AttackPoint" : "70",
+		"Defense" : "60",
+	    "Gold" : 14500
+    },
+	{
+	    "Name" : "CPU8",
+		"MaxHP" : "170",
+		"AttackPoint" : "80",
+		"Defense" : "70",
+	    "Gold" : 20000
+    }
+  ]
+}

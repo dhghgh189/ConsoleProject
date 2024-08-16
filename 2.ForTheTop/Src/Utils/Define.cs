@@ -9,6 +9,10 @@ namespace ConsoleProject2_ForTheTop.Utils
 {
     public class Define
     {
+        #region constant
+        public const string RESOURCES_PATH = "G:\\KGA\\Project\\ConsoleProject\\2.ForTheTop\\Src\\Resources";
+        #endregion
+
         #region Scenes
         public enum EScene
         { 
@@ -29,7 +33,9 @@ namespace ConsoleProject2_ForTheTop.Utils
                 BattleAttack,
                 BattleDefense,
                 BattleUse,
+                BattleEnemyAI,
                 BattleEnemyAttack,
+                BattleEnemyDefense,
             Max
         }
         #endregion
@@ -52,6 +58,7 @@ namespace ConsoleProject2_ForTheTop.Utils
             BattleDefense,
             BattleUse,
             BattleEnemyAttack,
+            BattleEnemyDefense,
         }
         #endregion
 
@@ -63,6 +70,7 @@ namespace ConsoleProject2_ForTheTop.Utils
         #endregion
 
         public enum EActor { Player, Enemy }
+        public enum EBattleState { Idle, Attack, Defense }
 
         public enum ECondition { Good, Normal, Bad }
 

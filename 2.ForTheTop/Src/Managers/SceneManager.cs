@@ -1,5 +1,4 @@
 ﻿using ConsoleProject2_ForTheTop.Scenes;
-using ConsoleProject2_ForTheTop.Scenes.Battle;
 using ConsoleProject2_ForTheTop.Utils;
 
 namespace ConsoleProject2_ForTheTop.Managers
@@ -37,14 +36,16 @@ namespace ConsoleProject2_ForTheTop.Managers
             _scenes[(int)Define.EScene.Equip] = new EquipScene();
             {
                 _scenes[(int)Define.EScene.EquipItem] = new EquipItemScene();
-                //_scenes[(int)Define.EScene.UnEquipItem] = new UnEquipItemScene();
+                _scenes[(int)Define.EScene.UnEquipItem] = new UnEquipItemScene();
             }
             _scenes[(int)Define.EScene.Battle] = new BattleScene();
             {
                 _scenes[(int)Define.EScene.BattleAttack] = new BattleAttackScene();
-                //_scenes[(int)Define.EScene.BattleDefense] = new BattleDefenseScene();
-                //_scenes[(int)Define.EScene.BattleUse] = new BattleUseScene();
+                _scenes[(int)Define.EScene.BattleDefense] = new BattleDefenseScene();
+                _scenes[(int)Define.EScene.BattleUse] = new BattleUseScene();
+                _scenes[(int)Define.EScene.BattleEnemyAI] = new BattleEnemyAIScene();
                 _scenes[(int)Define.EScene.BattleEnemyAttack] = new BattleEnemyAttackScene();
+                _scenes[(int)Define.EScene.BattleEnemyDefense] = new BattleEnemyDefenseScene();
             }
         }
 

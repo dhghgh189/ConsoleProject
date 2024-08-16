@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleProject2_ForTheTop.Actions.Battle
+namespace ConsoleProject2_ForTheTop.Actions
 {
     public class BattleAttack : BaseAction
     {
@@ -18,7 +18,9 @@ namespace ConsoleProject2_ForTheTop.Actions.Battle
 
         public override void Execute()
         {
-            int amount = Game.Actor.Player.Stat.AttackPoint;
+            Game.Actor.Player.State = Define.EBattleState.Attack;
+
+            int amount = Game.Actor.Player.FinalAttackPoint;
             Game.Actor.CurrentEnemy.TakeDamage(amount);
         }
     }

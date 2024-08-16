@@ -1,5 +1,4 @@
 ﻿using ConsoleProject2_ForTheTop.Actions;
-using ConsoleProject2_ForTheTop.Actions.Battle;
 using ConsoleProject2_ForTheTop.Actions.Training;
 using ConsoleProject2_ForTheTop.Utils;
 
@@ -27,13 +26,14 @@ namespace ConsoleProject2_ForTheTop.Managers
 
             // 장비하기
             _actionDict.Add(Define.ESubAction.EquipItem, new EquipItem());
-            //_actionDict.Add(Define.ESubAction.UnEquipItem, new UnEquipItem());
+            _actionDict.Add(Define.ESubAction.UnEquipItem, new UnEquipItem());
 
             // 전투개시
             _actionDict.Add(Define.ESubAction.BattleAttack, new BattleAttack());
-            //_actionDict.Add(Define.ESubAction.BattleDefense, new BattleDefense());
-            //_actionDict.Add(Define.ESubAction.BattleUse, new BattleUse());
+            _actionDict.Add(Define.ESubAction.BattleDefense, new BattleDefense());
+            _actionDict.Add(Define.ESubAction.BattleUse, new BattleUse());
             _actionDict.Add(Define.ESubAction.BattleEnemyAttack, new BattleEnemyAttack());
+            _actionDict.Add(Define.ESubAction.BattleEnemyDefense, new BattleEnemyDefense());
         }
 
         public T GetAction<T>(Define.ESubAction type) where T : BaseAction

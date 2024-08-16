@@ -49,7 +49,7 @@ namespace ConsoleProject2_ForTheTop.Managers
         {
             EquipmentDict = new Dictionary<string, EquipmentData>();
 
-            string jsonStr = File.ReadAllText($"{path}\\ItemData\\EquipmentData.json");
+            string jsonStr = DecodeDataFile($"{path}\\ItemData\\EquipmentData.Dat");
 
             JObject jObject = JObject.Parse(jsonStr);
             JToken token = jObject["Equipment"];
@@ -86,7 +86,7 @@ namespace ConsoleProject2_ForTheTop.Managers
         {
             ConsumeDict = new Dictionary<string, ConsumeData>();
 
-            string jsonStr = File.ReadAllText($"{path}\\ItemData\\ConsumeData.json");
+            string jsonStr = DecodeDataFile($"{path}\\ItemData\\ConsumeData.Dat");
 
             JObject jObject = JObject.Parse(jsonStr);
             JToken token = jObject["Consume"];
@@ -122,7 +122,7 @@ namespace ConsoleProject2_ForTheTop.Managers
         {
             EnemyDict = new Dictionary<string, EnemyData>();
 
-            string jsonStr = File.ReadAllText($"{path}\\EnemyData\\EnemyData.json");
+            string jsonStr = DecodeDataFile($"{path}\\EnemyData\\EnemyData.Dat");
 
             JObject jObject = JObject.Parse(jsonStr);
             JToken token = jObject["Enemies"];
@@ -143,5 +143,29 @@ namespace ConsoleProject2_ForTheTop.Managers
             Util.PrintLine("EnemyData Load OK!", ConsoleColor.Yellow);
         }
         #endregion
+
+        string DecodeDataFile(string filePath)
+        {
+            StringBuilder sb = new StringBuilder();
+            using (FileStream file = new FileStream(filePath, FileMode.Open))
+            {
+                using (StreamReader sr = new StreamReader(file))
+                {
+                    while (!sr.EndOfStream)
+                    {
+                        string[] line = sr.ReadLine().Split('_');
+                        char c = '\0';
+
+                        for (int i = 0; i < line.Length-1; i++)
+                        {
+                            c = (char)int.Parse(line[i]);
+                            sb.Append(c);
+                        }
+                    }
+                }
+            }
+
+            return sb.ToString();
+        }
     }
 }

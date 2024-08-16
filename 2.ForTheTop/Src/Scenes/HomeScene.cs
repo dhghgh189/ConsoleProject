@@ -64,9 +64,9 @@ namespace ConsoleProject2_ForTheTop.Scenes
         {
             // 플레이어의 상태 출력
             Util.PrintLine("==================================================================================\n", ConsoleColor.Gray);
-            Util.Print($" HP: {$"{Game.Actor.Player.Stat.HP} / {Game.Actor.Player.Stat.MaxHP}", -14}", ConsoleColor.Green);
-            Util.Print($"Attack: {Game.Actor.Player.Stat.AttackPoint,-8}", ConsoleColor.Red);
-            Util.Print($"Defense: {Game.Actor.Player.Stat.Defense,-8}", ConsoleColor.DarkCyan);
+            Util.Print($" HP: {$"{Game.Actor.Player.Stat.HP} / {Game.Actor.Player.Stat.MaxHP}", -11}", ConsoleColor.Green);
+            Util.Print($"Attack: {Game.Actor.Player.Stat.AttackPoint}+{Game.Actor.Player.AdditionalStat.AttackPoint, -5}", ConsoleColor.Red);
+            Util.Print($"Defense: {Game.Actor.Player.Stat.Defense}+{Game.Actor.Player.AdditionalStat.Defense, -5}", ConsoleColor.DarkCyan);
             Util.Print($"컨디션: {Game.Actor.Player.Condition,-8}", ConsoleColor.Gray);
             Util.PrintLine($"Gold: {Game.Actor.Player.Gold}G", ConsoleColor.Yellow);
             Util.PrintLine("\n==================================================================================\n", ConsoleColor.Gray);

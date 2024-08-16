@@ -11,12 +11,12 @@ namespace ConsoleProject2_ForTheTop.Items
     {
         public override void Equip()
         {
-            Game.Actor.Player.Stat.Defense += Data.Value;
+            Game.Actor.Player.AdditionalStat.Defense += Data.Value;
         }
 
         public override void UnEquip()
         {
-            Game.Actor.Player.Stat.Defense -= Data.Value;
+            Game.Actor.Player.AdditionalStat.Defense -= Data.Value;
         }
     }
 }

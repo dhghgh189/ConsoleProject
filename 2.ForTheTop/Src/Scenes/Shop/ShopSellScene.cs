@@ -1,8 +1,10 @@
 ﻿using ConsoleProject2_ForTheTop.Actions;
+using ConsoleProject2_ForTheTop.Datas;
 using ConsoleProject2_ForTheTop.Inventory;
 using ConsoleProject2_ForTheTop.Items;
 using ConsoleProject2_ForTheTop.Managers;
 using ConsoleProject2_ForTheTop.Utils;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ConsoleProject2_ForTheTop.Scenes
 {
@@ -11,7 +13,7 @@ namespace ConsoleProject2_ForTheTop.Scenes
         int _itemPosX = 5;
         int _itemPosY = 8;
 
-        int _InfoPosY = 22;
+        int _infoPosY = 22;
 
         Define.ESubAction _actionType;
 
@@ -43,7 +45,7 @@ namespace ConsoleProject2_ForTheTop.Scenes
 
         void PrintStatus()
         {
-            // 플레이어의 상태 출력
+            // 소지 Gold 출력
             Util.PrintLine("==================================================================================\n", ConsoleColor.Gray);
             Util.Print($"   소지 Gold: {Game.Actor.Player.Gold}G", ConsoleColor.Yellow);
             Util.PrintLine($"   소지한 아이템 갯수 : {Game.Actor.Player.Inventory.AllItems.Count}개    ", ConsoleColor.Green);
@@ -52,8 +54,8 @@ namespace ConsoleProject2_ForTheTop.Scenes
 
         void PrintItem()
         {
+            // 소지중인 아이템 출력
             List<Item> playerItems = Game.Actor.Player.Inventory.AllItems;
-            // 아이템 출력
             for (int i = 0; i < Inven.INVENTORY_MAX; i++)
             {
                 Console.SetCursorPosition(_itemPosX - 3, _itemPosY + i * 2);
@@ -69,6 +71,20 @@ namespace ConsoleProject2_ForTheTop.Scenes
                 Console.SetCursorPosition(_itemPosX, _itemPosY + i * 2);
                 if (i < playerItems.Count)
                 {
+                    if (playerItems[i].ItemType == Define.EItemType.Equipment)
+                    {
+                        Define.EEquipSlot slot = ((Equipment)playerItems[i]).EquipSlot;
+
+                        Util.Print("[");
+                        Util.Print($"{slot}", ConsoleColor.Yellow);
+                        Util.Print("] ");
+                    }
+                    else if (playerItems[i].ItemType == Define.EItemType.Consumable)
+                    {
+                        Util.Print("[");
+                        Util.Print("소모품", ConsoleColor.Red);
+                        Util.Print("] ");
+                    }
                     Util.Print("[");
                     Util.Print($"{playerItems[i].Name}", ConsoleColor.Green);
                     Util.Print("] ");
@@ -89,10 +105,10 @@ namespace ConsoleProject2_ForTheTop.Scenes
         void PrintInfoMsg()
         {
             // Menu 출력
-            Console.SetCursorPosition(0, _InfoPosY);
+            Console.SetCursorPosition(0, _infoPosY);
             Util.PrintLine("==================================================================================\n", ConsoleColor.Gray);
 
-            Console.SetCursorPosition(0, _InfoPosY + 3);
+            Console.SetCursorPosition(0, _infoPosY + 3);
             Util.Print("   판매할 아이템을 선택하세요!", ConsoleColor.Cyan);
             Util.PrintLine(" (위 아래키로 이동, 엔터로 선택, ESC로 돌아가기)\n", ConsoleColor.Green);
             Util.PrintLine("");
@@ -125,8 +141,7 @@ namespace ConsoleProject2_ForTheTop.Scenes
                     break;
                 case ConsoleKey.Enter:
                     {
-                        // sell
-
+                        // Sell Action
                         if (Game.Actor.Player.Inventory.IsInventoryEmpty())
                             return;
 

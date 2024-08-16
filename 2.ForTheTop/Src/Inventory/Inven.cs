@@ -1,4 +1,5 @@
-﻿using ConsoleProject2_ForTheTop.Items;
+﻿using ConsoleProject2_ForTheTop.Actions;
+using ConsoleProject2_ForTheTop.Items;
 using ConsoleProject2_ForTheTop.Utils;
 
 namespace ConsoleProject2_ForTheTop.Inventory
@@ -13,7 +14,15 @@ namespace ConsoleProject2_ForTheTop.Inventory
         Equipment[] _equipSlot;
 
         public List<Item> AllItems { get { return _items; } }
-        public List<Item> Equippable { get { return _items.Where(x => x.ItemType == Define.EItemType.Equipment).ToList(); } }
+        public Equipment[] EquipSlot {  get { return _equipSlot; } }     
+        public List<Item> Equippable
+        {
+            get { return _items.Where(x => x.ItemType == Define.EItemType.Equipment).ToList(); }
+        }
+        public List<Item> Consumable 
+        { 
+            get { return _items.Where(x => x.ItemType == Define.EItemType.Consumable).ToList(); } 
+        }
 
         public Inven()
         {

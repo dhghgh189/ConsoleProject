@@ -8,8 +8,8 @@ namespace ConsoleProject2_ForTheTop.Scenes
     public class TrainHelathScene : BaseScene, IActionable
     {
 
-        int _actionPosX = 16;
-        int _actionPosY = 16;
+        int _infoPosX = 16;
+        int _infoPosY = 16;
         int _beforeHp;
 
         Define.ESubAction _actionType;
@@ -72,18 +72,18 @@ namespace ConsoleProject2_ForTheTop.Scenes
         {
             // 플레이어의 상태 출력
             Util.PrintLine("==================================================================================\n", ConsoleColor.Gray);
-            Util.Print($" HP: {$"{Game.Actor.Player.Stat.HP} / {Game.Actor.Player.Stat.MaxHP}",-14}", ConsoleColor.Green);
-            Util.Print($"Attack: {Game.Actor.Player.Stat.AttackPoint,-8}", ConsoleColor.Red);
-            Util.Print($"Defense: {Game.Actor.Player.Stat.Defense,-8}", ConsoleColor.DarkCyan);
+            Util.Print($" HP: {$"{Game.Actor.Player.Stat.HP} / {Game.Actor.Player.Stat.MaxHP}",-11}", ConsoleColor.Green);
+            Util.Print($"Attack: {Game.Actor.Player.Stat.AttackPoint}+{Game.Actor.Player.AdditionalStat.AttackPoint,-5}", ConsoleColor.Red);
+            Util.Print($"Defense: {Game.Actor.Player.Stat.Defense}+{Game.Actor.Player.AdditionalStat.Defense,-5}", ConsoleColor.DarkCyan);
             Util.Print($"컨디션: {Game.Actor.Player.Condition,-8}", ConsoleColor.Gray);
             Util.PrintLine($"Gold: {Game.Actor.Player.Gold}G", ConsoleColor.Yellow);
-            Util.PrintLine("\n==================================================================================", ConsoleColor.Gray);
+            Util.PrintLine("\n==================================================================================\n", ConsoleColor.Gray);
         }
 
         void PrintProcess()
         {
             // 훈련 진행 내용 출력
-            Console.SetCursorPosition(_actionPosX, _actionPosY);
+            Console.SetCursorPosition(_infoPosX, _infoPosY);
             Util.Print($"체력 단련을 진행합니다...", _textColor);
             Thread.Sleep(2500);
         }
@@ -93,13 +93,13 @@ namespace ConsoleProject2_ForTheTop.Scenes
             int amount = Game.Actions.GetAction<TrainHealth>(_actionType).Amount;
 
             // 훈련 결과 출력
-            Console.SetCursorPosition(_actionPosX, _actionPosY);
+            Console.SetCursorPosition(_infoPosX, _infoPosY);
             for (int j = 0; j < 30; j++)
             {
                 Util.Print(" ");
             }
 
-            Console.SetCursorPosition(_actionPosX, _actionPosY);
+            Console.SetCursorPosition(_infoPosX, _infoPosY);
             Util.Print($"HP가 ");
             Util.Print($"{amount} ", _textColor);
             Util.Print($"증가했습니다! ({_beforeHp} => ");
