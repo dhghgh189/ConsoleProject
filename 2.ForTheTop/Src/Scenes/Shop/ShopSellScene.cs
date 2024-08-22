@@ -28,6 +28,7 @@ namespace ConsoleProject2_ForTheTop.Scenes
         public override void Enter()
         {
             _menuIndex = 0;
+            Game.Actions.GetAction<Shopping>(_actionType).SetCustomer(Game.Actor.Player);
         }
 
         public override void Render()
@@ -71,7 +72,7 @@ namespace ConsoleProject2_ForTheTop.Scenes
                 Console.SetCursorPosition(_itemPosX, _itemPosY + i * 2);
                 if (i < playerItems.Count)
                 {
-                    if (playerItems[i].ItemType == Define.EItemType.Equipment)
+                    if (Item.IsEquipment(playerItems[i].ItemType))
                     {
                         Define.EEquipSlot slot = ((Equipment)playerItems[i]).EquipSlot;
 
@@ -79,7 +80,7 @@ namespace ConsoleProject2_ForTheTop.Scenes
                         Util.Print($"{slot}", ConsoleColor.Yellow);
                         Util.Print("] ");
                     }
-                    else if (playerItems[i].ItemType == Define.EItemType.Consumable)
+                    else
                     {
                         Util.Print("[");
                         Util.Print("소모품", ConsoleColor.Red);
@@ -146,7 +147,7 @@ namespace ConsoleProject2_ForTheTop.Scenes
                             return;
 
                         Item sellItem = Game.Actor.Player.Inventory.AllItems[_menuIndex];
-                        Game.Actions.GetAction<ShopSell>(_actionType).SetItem(sellItem);
+                        Game.Actions.GetAction<Shopping>(_actionType).SetItem(sellItem);
                         Game.Actions.ExecuteAction(_actionType);
 
                         _menuIndex = 0;

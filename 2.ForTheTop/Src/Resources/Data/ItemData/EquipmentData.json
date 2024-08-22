@@ -2,57 +2,63 @@
   "Equipment": [
     {
 	    "Name" : "날카로운 검",
-	    "ItemType" : "Equipment",
+	    "ItemType" : "Weapon",
 	    "Description" : "공격력 15 증가",
 	    "Price" : 1500,
-	    "EquipType" : "Weapon",
 	    "EquipSlot" : "Weapon",
-	    "Value" : 15
+	    "MaxHp" : 0,
+		"AttackPoint" : 15,
+		"Defense" : 0
     },
 	{
 	    "Name" : "전사의 창",
-	    "ItemType" : "Equipment",
+	    "ItemType" : "Weapon",
 	    "Description" : "공격력 30 증가",
 	    "Price" : 3000,
-	    "EquipType" : "Weapon",
 	    "EquipSlot" : "Weapon",
-	    "Value" : 30
+	    "MaxHp" : 0,
+		"AttackPoint" : 30,
+		"Defense" : 0
 	},
 	{
 		"Name" : "야만의 몽둥이",
-		"ItemType" : "Equipment",
+		"ItemType" : "Weapon",
 		"Description" : "공격력 50 증가",
 		"Price" : 10000,
-		"EquipType" : "Weapon",
 		"EquipSlot" : "Weapon",
-		"Value" : 50
+		"MaxHp" : 0,
+		"AttackPoint" : 50,
+		"Defense" : 0
 	},
 	{
 	    "Name" : "전사의 헬멧",
-	    "ItemType" : "Equipment",
+	    "ItemType" : "Armor",
 	    "Description" : "방어력 10 증가",
 	    "Price" : 2000,
-	    "EquipType" : "Armor",
 	    "EquipSlot" : "Helmet",
-	    "Value" : 10
+	    "MaxHp" : 0,
+		"AttackPoint" : 0,
+		"Defense" : 10
     },
 	{
 	    "Name" : "전사의 갑옷 상의",
-	    "ItemType" : "Equipment",
+	    "ItemType" : "Armor",
 	    "Description" : "방어력 30 증가",
 	    "Price" : 5000,
-	    "EquipType" : "Armor",
 	    "EquipSlot" : "Upper",
-	    "Value" : 30
+	    "MaxHp" : 0,
+		"AttackPoint" : 0,
+		"Defense" : 30
 	},
 	{
 		"Name" : "전사의 갑옷 하의",
-		"ItemType" : "Equipment",
+		"ItemType" : "Armor",
 		"Description" : "방어력 20 증가",
 		"Price" : 3500,
-		"EquipType" : "Armor",
 		"EquipSlot" : "Lower",
-		"Value" : 20
+		"MaxHp" : 0,
+		"AttackPoint" : 0,
+		"Defense" : 20
 	}
   ]
 }

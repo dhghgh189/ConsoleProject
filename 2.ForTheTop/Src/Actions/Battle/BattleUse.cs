@@ -24,7 +24,7 @@ namespace ConsoleProject2_ForTheTop.Actions
 
         public override void Execute()
         {
-            if (_item.ItemType != Define.EItemType.Consumable)
+            if (Item.IsEquipment(_item.ItemType))
                 return;
 
             Consumable consumable = (Consumable)_item;

@@ -1,4 +1,5 @@
-﻿using ConsoleProject2_ForTheTop.Datas;
+﻿using ConsoleProject2_ForTheTop.Actors;
+using ConsoleProject2_ForTheTop.Datas;
 using ConsoleProject2_ForTheTop.Utils;
 using System;
 using System.Collections.Generic;
@@ -8,35 +9,38 @@ using System.Threading.Tasks;
 
 namespace ConsoleProject2_ForTheTop.Items
 {
-    public abstract class Equipment : Item
+    public class Equipment : Item
     {
-        protected Define.EEquipType _equipType;
-        protected Define.EEquipSlot _equipSlot;
-        protected int _value;
+        bool _isEquipped;
 
-        public EquipmentData Data 
+        public Equipment()
         {
-            get
-            {
-                return (EquipmentData)_data; 
-            }
+            _isEquipped = false;
         }
 
-        public Define.EEquipType EquipType { get { return Data.EquipType; } }
+        public EquipmentData Data { get { return (EquipmentData)_data; } }
         public Define.EEquipSlot EquipSlot { get { return Data.EquipSlot; } }
-        public int Value { get { return Data.Value; } }
+        public int MaxHp { get { return Data.MaxHp; } }
+        public int AttackPoint { get { return Data.AttackPoint; } }
+        public int Defense {  get { return Data.Defense; } }
+        public bool IsEquipped { get { return _isEquipped; } }
 
-        public override void SetInfo(string name)
+        public override void Use()
         {
-            base.SetInfo(name);
+            if (_isEquipped == false)
+            {
+                _owner.AdditionalStat.MaxHP += MaxHp;
+                _owner.AdditionalStat.AttackPoint += AttackPoint;
+                _owner.AdditionalStat.Defense += Defense;
+            }
+            else
+            {
+                _owner.AdditionalStat.MaxHP -= MaxHp;
+                _owner.AdditionalStat.AttackPoint -= AttackPoint;
+                _owner.AdditionalStat.Defense -= Defense;
+            }
 
-            _equipType = Data.EquipType;
-            _equipSlot = Data.EquipSlot;
-            _value = Data.Value;
+            _isEquipped = !_isEquipped;
         }
-
-        public abstract void Equip();
-
-        public abstract void UnEquip();
     }
 }

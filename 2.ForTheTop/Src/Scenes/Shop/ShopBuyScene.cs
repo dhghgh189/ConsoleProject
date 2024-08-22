@@ -1,5 +1,6 @@
 ﻿using ConsoleProject2_ForTheTop.Actions;
 using ConsoleProject2_ForTheTop.Datas;
+using ConsoleProject2_ForTheTop.Items;
 using ConsoleProject2_ForTheTop.Managers;
 using ConsoleProject2_ForTheTop.Utils;
 
@@ -28,6 +29,7 @@ namespace ConsoleProject2_ForTheTop.Scenes
         public override void Enter()
         {
             _menuIndex = 0;
+            Game.Actions.GetAction<Shopping>(_actionType).SetCustomer(Game.Actor.Player);
         }
 
         public override void Render()
@@ -70,13 +72,13 @@ namespace ConsoleProject2_ForTheTop.Scenes
                 }
 
                 Console.SetCursorPosition(_itemPosX, _itemPosY + lineCount * 2);
-                if (data.ItemType == Define.EItemType.Equipment)
+                if (Item.IsEquipment(data.ItemType))
                 {
                     Util.Print("[");
                     Util.Print($"{((EquipmentData)data).EquipSlot}", ConsoleColor.Yellow);
                     Util.Print("] ");
                 }
-                else if (data.ItemType == Define.EItemType.Consumable)
+                else
                 {
                     Util.Print("[");
                     Util.Print("소모품", ConsoleColor.Red);
@@ -137,7 +139,7 @@ namespace ConsoleProject2_ForTheTop.Scenes
                     {
                         // Buy action
                         string name = _sellingItems[_menuIndex].Name;
-                        Game.Actions.GetAction<ShopBuy>(_actionType).SetName(name);
+                        Game.Actions.GetAction<Shopping>(_actionType).SetName(name);
                         Game.Actions.ExecuteAction(_actionType);
                     }
                     break;

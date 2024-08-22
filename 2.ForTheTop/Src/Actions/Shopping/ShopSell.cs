@@ -21,7 +21,7 @@ namespace ConsoleProject2_ForTheTop.Actions
             if (_item == null)
                 return;
 
-            if (Game.Actor.Player.Inventory.RemoveItem(_item) == false)
+            if (_customer.Inventory.RemoveItem(_item) == false)
                 return;
 
             Game.Actor.Player.Gold += _item.Price;

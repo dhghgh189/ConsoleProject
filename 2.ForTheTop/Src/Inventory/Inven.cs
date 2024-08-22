@@ -1,4 +1,5 @@
 ﻿using ConsoleProject2_ForTheTop.Actions;
+using ConsoleProject2_ForTheTop.Actors;
 using ConsoleProject2_ForTheTop.Items;
 using ConsoleProject2_ForTheTop.Utils;
 
@@ -17,11 +18,11 @@ namespace ConsoleProject2_ForTheTop.Inventory
         public Equipment[] EquipSlot {  get { return _equipSlot; } }     
         public List<Item> Equippable
         {
-            get { return _items.Where(x => x.ItemType == Define.EItemType.Equipment).ToList(); }
+            get { return _items.Where(x => Item.IsEquipment(x.ItemType)).ToList(); }
         }
         public List<Item> Consumable 
         { 
-            get { return _items.Where(x => x.ItemType == Define.EItemType.Consumable).ToList(); } 
+            get { return _items.Where(x => !Item.IsEquipment(x.ItemType)).ToList(); } 
         }
 
         public Inven()
@@ -77,7 +78,7 @@ namespace ConsoleProject2_ForTheTop.Inventory
 
             // 새 아이템 장착
             _equipSlot[(int)equipment.EquipSlot] = equipment;
-            equipment.Equip();
+            equipment.Use();
 
             return true;
         }
@@ -96,7 +97,7 @@ namespace ConsoleProject2_ForTheTop.Inventory
                 return false;
 
             // 아이템을 해제
-            equipment.UnEquip();
+            equipment.Use();
 
             // 슬롯에서 제거
             _equipSlot[(int)equipment.EquipSlot] = null;

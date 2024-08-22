@@ -1,76 +1,50 @@
-﻿using ConsoleProject2_ForTheTop.Datas;
+﻿using ConsoleProject2_ForTheTop.Actions;
+using ConsoleProject2_ForTheTop.Actors;
+using ConsoleProject2_ForTheTop.Datas;
 using ConsoleProject2_ForTheTop.Managers;
 using ConsoleProject2_ForTheTop.Utils;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ConsoleProject2_ForTheTop.Items
 {
-    public class Item
+    public abstract class Item
     {
+        protected Player _owner;
         protected ItemData _data;
-        protected string _name;
-        protected Define.EItemType _itemType;
-        protected string _description;
-        protected int _price;
 
-        public string Name { get { return _name; } }
-        public Define.EItemType ItemType { get { return _itemType; } }
-        public string Description { get { return _description; } }
-        public int Price { get { return _price; } }
+        public Player Owner { get { return _owner; } }
+        public string Name { get { return _data.Name; } }
+        public Define.EItemType ItemType { get { return _data.ItemType; } }
+        public string Description { get { return _data.Description; } }
+        public int Price { get { return _data.Price; } }
 
-        public virtual void SetInfo(string name)
+        public virtual void SetInfo(Player owner, ItemData data)
         {
-            if (Game.Data.ItemDict.TryGetValue(name, out _data) == false)
-                return;
-
-            _name = _data.Name;
-            _itemType = _data.ItemType;
-            _description = _data.Description;
-            _price = _data.Price;
+            _data = data;
+            _owner = owner;
         }
 
-        public static Item MakeItem(ItemData data)
+        public abstract void Use();
+
+        public static Item MakeItem(Player owner, ItemData data) 
         {
             Item item = null;
 
-            if (data.ItemType == Define.EItemType.Equipment)
-            {
-                EquipmentData equipData = (EquipmentData)data;
+            if (IsEquipment(data.ItemType))
+                item = new Equipment();
+            else
+                item = new Consumable();
 
-                switch (equipData.EquipType)
-                {
-                    case Define.EEquipType.Weapon:
-                        {
-                            Weapon weapon = new Weapon();
-                            weapon.SetInfo(equipData.Name);
-                            item = weapon;
-                        }
-                        break;
-                    case Define.EEquipType.Armor:
-                        {
-                            Armor armor = new Armor();
-                            armor.SetInfo(equipData.Name);
-                            item = armor;
-                        }
-                        break;
-                }
-            }
-            else if (data.ItemType == Define.EItemType.Consumable)
-            {
-                ConsumeData consumeData = (ConsumeData)data;
-
-                switch (consumeData.ConsumeType)
-                {
-                    case Define.EConsumeType.Potion:
-                        {
-                            Potion potion = new Potion();
-                            potion.SetInfo(consumeData.Name);
-                            item = potion;
-                        }
-                        break;
-                }
-            }
-
+            item.SetInfo(owner, data);
             return item;
+        }
+
+        public static bool IsEquipment(Define.EItemType itemType)
+        {
+            if (itemType > Define.EItemType.EquipmentMax)
+                return false;
+            else
+                return true;
         }
     }
 }

@@ -22,7 +22,7 @@ namespace ConsoleProject2_ForTheTop.Actions
             if (Game.Actor.Player.Gold < data.Price)
                 return;
 
-            Item item = Item.MakeItem(data);
+            Item item = Item.MakeItem(_customer, data);
 
             if (item == null)
                 return;

@@ -18,6 +18,11 @@ namespace ConsoleProject2_ForTheTop.Actors
         public Inven Inventory { get { return _inventory;} }
         public Stat AdditionalStat { get { return _additionalStat; } }
 
+        public int FinalMaxHp
+        {
+            get { return _stat.MaxHP + _additionalStat.MaxHP; }
+        }
+
         public int FinalAttackPoint 
         { 
             get { return _stat.AttackPoint + _additionalStat.AttackPoint; } 
@@ -46,7 +51,7 @@ namespace ConsoleProject2_ForTheTop.Actors
 
             _condition = Define.ECondition.Good;
 
-            _gold = 1000;
+            _gold = 100000;
         }
 
         public override void TakeDamage(int amount)

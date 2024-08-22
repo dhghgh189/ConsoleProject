@@ -63,9 +63,10 @@ namespace ConsoleProject2_ForTheTop.Managers
                 bResult = Enum.TryParse(obj.Value<string>("ItemType"), out data.ItemType);
                 data.Description = obj.Value<string>("Description");
                 data.Price = obj.Value<int>("Price");
-                bResult = Enum.TryParse(obj.Value<string>("EquipType"), out data.EquipType);
                 bResult = Enum.TryParse(obj.Value<string>("EquipSlot"), out data.EquipSlot);
-                data.Value = obj.Value<int>("Value");
+                data.MaxHp = obj.Value<int>("MaxHp");
+                data.AttackPoint = obj.Value<int>("AttackPoint");
+                data.Defense = obj.Value<int>("Defense");
 
                 EquipmentDict.Add(data.Name, data);
                 ItemDict.Add(data.Name, data);
@@ -100,8 +101,7 @@ namespace ConsoleProject2_ForTheTop.Managers
                 bResult = Enum.TryParse(obj.Value<string>("ItemType"), out data.ItemType);
                 data.Description = obj.Value<string>("Description");
                 data.Price = obj.Value<int>("Price");
-                bResult = Enum.TryParse(obj.Value<string>("ConsumeType"), out data.ConsumeType);
-                data.Amount = obj.Value<int>("Amount");
+                data.Hp = obj.Value<int>("Hp");
 
                 ConsumeDict.Add(data.Name, data);
                 ItemDict.Add(data.Name, data);

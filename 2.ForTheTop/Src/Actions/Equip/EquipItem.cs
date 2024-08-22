@@ -17,7 +17,7 @@ namespace ConsoleProject2_ForTheTop.Actions
 
         public override void Execute()
         {
-            if (_item.ItemType != Define.EItemType.Equipment)
+            if (!Item.IsEquipment(_item.ItemType))
                 return;
 
             Game.Actor.Player.Inventory.Equip((Equipment)_item);

@@ -12,14 +12,14 @@ namespace ConsoleProject2_ForTheTop.Datas
 
     public class EquipmentData : ItemData
     {
-        public Define.EEquipType EquipType;
         public Define.EEquipSlot EquipSlot;
-        public int Value;
+        public int MaxHp;
+        public int AttackPoint;
+        public int Defense;
     }
 
     public class ConsumeData : ItemData
     {
-        public Define.EConsumeType ConsumeType;
-        public int Amount;
+        public int Hp;
     }
 }

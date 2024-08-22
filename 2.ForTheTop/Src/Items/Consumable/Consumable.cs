@@ -1,4 +1,5 @@
-﻿using ConsoleProject2_ForTheTop.Datas;
+﻿using ConsoleProject2_ForTheTop.Actors;
+using ConsoleProject2_ForTheTop.Datas;
 using ConsoleProject2_ForTheTop.Utils;
 using System;
 using System.Collections.Generic;
@@ -8,30 +9,16 @@ using System.Threading.Tasks;
 
 namespace ConsoleProject2_ForTheTop.Items
 {
-    public abstract class Consumable : Item
+    public class Consumable : Item
     {
-        protected Define.EConsumeType _consumeType;
-        protected int _amount;
+        int _Hp;
 
-        public ConsumeData Data
+        public ConsumeData Data { get { return (ConsumeData)_data; } }
+        public int Hp { get { return Data.Hp; } }
+
+        public override void Use()
         {
-            get
-            {
-                return (ConsumeData)_data;
-            }
+            _owner.Stat.HP += Hp;
         }
-
-        public Define.EConsumeType ConsumeType { get { return Data.ConsumeType; } }      
-        public int Amount { get { return Data.Amount; } }
-
-        public override void SetInfo(string name)
-        {
-            base.SetInfo(name);
-
-            _consumeType = Data.ConsumeType;
-            _amount = Data.Amount;
-        }
-
-        public abstract void Use();
     }
 }

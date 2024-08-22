@@ -63,10 +63,8 @@ namespace ConsoleProject2_ForTheTop.Utils
         #endregion
 
         #region Items
-        public enum EItemType { Equipment, Consumable }
-        public enum EEquipType { Weapon, Armor }
+        public enum EItemType { Weapon, Armor, EquipmentMax, Potion, ConsumableMax }
         public enum EEquipSlot { Weapon, Helmet, Upper, Lower, Max }
-        public enum EConsumeType { Potion }
         #endregion
 
         public enum EActor { Player, Enemy }
