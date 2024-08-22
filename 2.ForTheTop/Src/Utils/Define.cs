@@ -74,6 +74,8 @@ namespace ConsoleProject2_ForTheTop.Utils
 
         public enum ECondition { Good, Normal, Bad }
 
+        public enum EEffect { Hp, AttackPoint, Defense }
+
         #region Define Menus
         public static readonly SceneMenu[] homeMenu = new SceneMenu[(int)EAction.Max]
         {
